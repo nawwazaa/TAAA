@@ -248,7 +248,8 @@ const QRRedemptionSystem: React.FC = () => {
       const validation = validateQRCode(qrData);
       if (!validation.isValid) {
         setErrorMessage(validation.error || 'Invalid QR code');
-        setRedemptionStatus('error');
+        console.warn('Geolocation is not supported by this browser');
+        resolve({ lat: 0, lng: 0 }); // Default coordinates
         return;
       }
 
@@ -260,7 +261,8 @@ const QRRedemptionSystem: React.FC = () => {
         userName: user?.name || '',
         sellerId: qrData.sellerId,
         sellerName: qrData.sellerName,
-        redemptionDate: new Date(),
+          console.warn(`Location access denied: ${error.message}`);
+          resolve({ lat: 0, lng: 0 }); // Default coordinates when denied
         location: {
           lat: userLocation?.lat || 0,
           lng: userLocation?.lng || 0,
