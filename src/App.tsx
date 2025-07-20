@@ -258,9 +258,9 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gray-50 ${i18n.language === 'ar' ? 'rtl' : 'ltr'} relative`}>
+    <div className={`min-h-screen bg-gray-50 ${i18n.language === 'ar' ? 'rtl' : 'ltr'} relative overflow-x-hidden`}>
       {/* View Mode Toggle */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-4 z-50 hidden md:block">
         <button
           onClick={() => setViewMode('ios')}
           className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg"
@@ -270,9 +270,9 @@ const AppContent: React.FC = () => {
       </div>
       
       <Header />
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
-        <main className="flex-1 p-6 max-w-7xl">
+        <main className="flex-1 p-3 md:p-6 w-full md:max-w-7xl">
           {renderMainContent()}
         </main>
       </div>

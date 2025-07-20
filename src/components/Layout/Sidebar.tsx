@@ -75,9 +75,36 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   }
 
   return (
-    <aside className={`w-64 bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <aside className={`w-full md:w-64 bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen`}>
       <div className="h-full flex flex-col">
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-2 md:px-4 py-3 md:py-6 space-y-1 md:space-y-2">
+          {/* Mobile: Horizontal scroll menu */}
+          <div className="md:hidden">
+            <div className="flex space-x-2 rtl:space-x-reverse overflow-x-auto pb-2">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => onTabChange(item.id)}
+                    className={`flex-shrink-0 flex flex-col items-center px-3 py-2 rounded-lg text-center transition-all duration-200 min-w-[80px] ${
+                      isActive
+                        ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                    }`}
+                  >
+                    <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                    <span className="text-xs font-medium">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Desktop: Vertical menu */}
+          <div className="hidden md:block space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -97,6 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
               </button>
             );
           })}
+          </div>
         </nav>
       </div>
     </aside>

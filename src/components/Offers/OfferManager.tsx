@@ -301,7 +301,7 @@ const OfferManager: React.FC = () => {
               </div>
 
               {/* Items Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredOffers.map((offer) => (
                   <div key={offer.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative">
@@ -318,13 +318,13 @@ const OfferManager: React.FC = () => {
                     </div>
                     
                     <div className="p-4">
-                      <h4 className="font-bold text-gray-900 mb-2 line-clamp-2">{offer.title}</h4>
+                      <h4 className="font-bold text-sm md:text-base text-gray-900 mb-2 line-clamp-2">{offer.title}</h4>
                       <p className="text-sm text-gray-600 mb-3 line-clamp-2">{offer.description}</p>
                       
                       <div className="space-y-2 text-sm text-gray-500 mb-4">
                         <div className="flex items-center justify-between">
                           <span className="line-through">{offer.originalPrice} FB</span>
-                          <span className="text-lg font-bold text-green-600">{offer.discountedPrice} FB</span>
+                          <span className="text-base md:text-lg font-bold text-green-600">{offer.discountedPrice} FB</span>
                         </div>
                         <div className="flex items-center">
                           <MapPin className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />
@@ -345,7 +345,7 @@ const OfferManager: React.FC = () => {
                       ) : (
                         <button
                           onClick={() => setShowPurchaseModal(offer)}
-                          className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg font-medium hover:from-blue-600 hover:to-purple-600 transition-colors"
+                          className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg text-sm md:text-base font-medium hover:from-blue-600 hover:to-purple-600 transition-colors"
                         >
                           Buy Now
                         </button>
@@ -375,7 +375,7 @@ const OfferManager: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {sampleOffers
                     .filter(offer => purchasedOffers.includes(offer.id))
                     .map((offer) => (
@@ -390,10 +390,10 @@ const OfferManager: React.FC = () => {
                             <h4 className="font-bold text-gray-900 mb-1">{offer.title}</h4>
                             <p className="text-sm text-gray-600 mb-2">Paid: {offer.discountedPrice} FB</p>
                             <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                              <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                              <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0">
                                 ✓ Purchased
                               </span>
-                              <button className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600">
+                              <button className="bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 flex-shrink-0">
                                 <QrCode className="w-3 h-3 inline mr-1 rtl:mr-0 rtl:ml-1" />
                                 Show QR
                               </button>

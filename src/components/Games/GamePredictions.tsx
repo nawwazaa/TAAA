@@ -116,15 +116,15 @@ const GamePredictions: React.FC = () => {
       </div>
 
       {/* User Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Your Flixbits</p>
-              <p className="text-3xl font-bold text-gray-900">{user?.flixbits.toLocaleString()}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Your Flixbits</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{user?.flixbits.toLocaleString()}</p>
             </div>
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-3 rounded-lg">
-              <Star className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 md:p-3 rounded-lg">
+              <Star className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -132,11 +132,11 @@ const GamePredictions: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Predictions Made</p>
-              <p className="text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Predictions Made</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length}</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
-              <Target className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
+              <Target className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -144,11 +144,11 @@ const GamePredictions: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Potential Earnings</p>
-              <p className="text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length * 50}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Potential Earnings</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length * 50}</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
-              <Trophy className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 md:p-3 rounded-lg">
+              <Trophy className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -189,11 +189,11 @@ const GamePredictions: React.FC = () => {
                 </div>
 
                 {/* Team Selection Boxes */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Home Team */}
                   <button
                     onClick={() => handlePrediction(game.id, 'home')}
-                    className={`p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
+                    className={`p-4 md:p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
                       userPrediction === 'home'
                         ? 'border-blue-500 bg-blue-50 shadow-lg'
                         : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
@@ -201,17 +201,17 @@ const GamePredictions: React.FC = () => {
                   >
                     <div className="text-center">
                       <div className="text-4xl mb-3">🏠</div>
-                      <h4 className="font-bold text-lg text-gray-900 mb-2">{game.homeTeam}</h4>
+                      <h4 className="font-bold text-sm md:text-lg text-gray-900 mb-2">{game.homeTeam}</h4>
                       <p className="text-sm text-gray-600 mb-3">HOME TEAM</p>
                       {userPrediction === 'home' ? (
                         <div className="flex items-center justify-center space-x-2 rtl:space-x-reverse">
                           <CheckCircle className="w-5 h-5 text-green-500" />
-                          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                          <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs md:text-sm font-bold">
                             ✓ SELECTED
                           </span>
                         </div>
                       ) : (
-                        <div className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+                        <div className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs md:text-sm font-medium">
                           Click to Select
                         </div>
                       )}
@@ -221,7 +221,7 @@ const GamePredictions: React.FC = () => {
                   {/* Draw */}
                   <button
                     onClick={() => handlePrediction(game.id, 'draw')}
-                    className={`p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
+                    className={`p-4 md:p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
                       userPrediction === 'draw'
                         ? 'border-yellow-500 bg-yellow-50 shadow-lg'
                         : 'border-gray-300 hover:border-yellow-400 hover:bg-yellow-50'
@@ -229,17 +229,17 @@ const GamePredictions: React.FC = () => {
                   >
                     <div className="text-center">
                       <div className="text-4xl mb-3">🤝</div>
-                      <h4 className="font-bold text-lg text-gray-900 mb-2">DRAW</h4>
+                      <h4 className="font-bold text-sm md:text-lg text-gray-900 mb-2">DRAW</h4>
                       <p className="text-sm text-gray-600 mb-3">TIE GAME</p>
                       {userPrediction === 'draw' ? (
                         <div className="flex items-center justify-center space-x-2 rtl:space-x-reverse">
                           <CheckCircle className="w-5 h-5 text-green-500" />
-                          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                          <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs md:text-sm font-bold">
                             ✓ SELECTED
                           </span>
                         </div>
                       ) : (
-                        <div className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+                        <div className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs md:text-sm font-medium">
                           Click to Select
                         </div>
                       )}
@@ -249,7 +249,7 @@ const GamePredictions: React.FC = () => {
                   {/* Away Team */}
                   <button
                     onClick={() => handlePrediction(game.id, 'away')}
-                    className={`p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
+                    className={`p-4 md:p-6 rounded-xl border-3 transition-all transform hover:scale-105 ${
                       userPrediction === 'away'
                         ? 'border-red-500 bg-red-50 shadow-lg'
                         : 'border-gray-300 hover:border-red-400 hover:bg-red-50'
@@ -257,17 +257,17 @@ const GamePredictions: React.FC = () => {
                   >
                     <div className="text-center">
                       <div className="text-4xl mb-3">✈️</div>
-                      <h4 className="font-bold text-lg text-gray-900 mb-2">{game.awayTeam}</h4>
+                      <h4 className="font-bold text-sm md:text-lg text-gray-900 mb-2">{game.awayTeam}</h4>
                       <p className="text-sm text-gray-600 mb-3">AWAY TEAM</p>
                       {userPrediction === 'away' ? (
                         <div className="flex items-center justify-center space-x-2 rtl:space-x-reverse">
                           <CheckCircle className="w-5 h-5 text-green-500" />
-                          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                          <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs md:text-sm font-bold">
                             ✓ SELECTED
                           </span>
                         </div>
                       ) : (
-                        <div className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+                        <div className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs md:text-sm font-medium">
                           Click to Select
                         </div>
                       )}
@@ -325,11 +325,12 @@ const GamePredictions: React.FC = () => {
             
             <button
               onClick={submitPredictions}
-              className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-12 py-4 rounded-xl font-bold text-xl hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-xl"
+              className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 md:px-12 py-3 md:py-4 rounded-xl font-bold text-lg md:text-xl hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-xl"
             >
-              🏆 SUBMIT MY PREDICTIONS ({Object.keys(selectedPredictions).length} games)
+              <span className="hidden sm:inline">🏆 SUBMIT MY PREDICTIONS ({Object.keys(selectedPredictions).length} games)</span>
+              <span className="sm:hidden">🏆 SUBMIT ({Object.keys(selectedPredictions).length})</span>
             </button>
-            <p className="text-gray-600 mt-3 text-lg">
+            <p className="text-gray-600 mt-3 text-sm md:text-lg">
               💰 Earn <span className="font-bold">+{Object.keys(selectedPredictions).length * 50} Flixbits</span> for participation + huge bonus for correct predictions!
             </p>
           </div>

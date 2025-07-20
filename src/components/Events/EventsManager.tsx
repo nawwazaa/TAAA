@@ -387,7 +387,7 @@ const EventsManager: React.FC = () => {
               </div>
 
               {/* Events Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredEvents.map((event) => (
                   <div key={event.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative">
@@ -415,7 +415,7 @@ const EventsManager: React.FC = () => {
                     </div>
                     
                     <div className="p-4">
-                      <h4 className="font-bold text-gray-900 mb-2 line-clamp-2">{event.title}</h4>
+                      <h4 className="font-bold text-sm md:text-base text-gray-900 mb-2 line-clamp-2">{event.title}</h4>
                       <p className="text-sm text-gray-600 mb-3 line-clamp-2">{event.description}</p>
                       
                       <div className="space-y-2 text-sm text-gray-500 mb-4">
@@ -444,7 +444,7 @@ const EventsManager: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <button
                           onClick={() => setShowEventDetails(event)}
-                          className="text-pink-600 hover:text-pink-700 font-medium text-sm"
+                          className="text-pink-600 hover:text-pink-700 font-medium text-xs md:text-sm"
                         >
                           View Details
                         </button>
@@ -457,9 +457,10 @@ const EventsManager: React.FC = () => {
                           <button
                             onClick={() => handleJoinEvent(event.id, event.price)}
                             disabled={event.currentAttendees >= event.maxAttendees}
-                            className="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-4 py-2 rounded-lg font-medium hover:from-pink-600 hover:to-rose-600 transition-colors disabled:opacity-50"
+                            className="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-3 py-2 rounded-lg text-xs md:text-sm font-medium hover:from-pink-600 hover:to-rose-600 transition-colors disabled:opacity-50"
                           >
-                            {event.price > 0 ? `Join (${event.price} Flixbits)` : 'Join Free'}
+                            <span className="hidden sm:inline">{event.price > 0 ? `Join (${event.price} Flixbits)` : 'Join Free'}</span>
+                            <span className="sm:hidden">{event.price > 0 ? `${event.price} FB` : 'Free'}</span>
                           </button>
                         )}
                       </div>
