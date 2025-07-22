@@ -127,7 +127,7 @@ const AdminPanel: React.FC = () => {
             </div>
             
             {/* Desktop: Vertical menu */}
-            <div className="hidden lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-2">
+            <div className="hidden lg:block space-y-1">
               {adminSections.map((section) => {
                 const Icon = section.icon;
                 const isActive = activeSection === section.id;
@@ -136,7 +136,7 @@ const AdminPanel: React.FC = () => {
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
+                    className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
                       isActive
                         ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
