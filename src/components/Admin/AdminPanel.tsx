@@ -86,17 +86,17 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`flex ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Admin Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex-shrink-0 ${
         isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } ${isRTL ? 'right-0 left-auto' : ''}`}>
-        <div className="p-4 lg:p-6 border-b border-gray-200">
+        <div className="p-3 lg:p-4 border-b border-gray-200">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <Shield className="w-6 h-6 text-blue-600" />
-            <h1 className="text-lg lg:text-xl font-bold text-gray-900">Admin Panel</h1>
+            <h1 className="text-base lg:text-lg font-bold text-gray-900">Admin Panel</h1>
           </div>
-          <p className="text-gray-600 text-xs lg:text-sm mt-1">Complete System Control</p>
+          <p className="text-gray-600 text-xs mt-1">Complete System Control</p>
           
           {/* Mobile Close Button */}
           <button
@@ -107,7 +107,7 @@ const AdminPanel: React.FC = () => {
           </button>
         </div>
         
-        <nav className="p-4">
+        <nav className="p-2 lg:p-3">
           <div className="space-y-1">
             {adminSections.map((section) => {
               const Icon = section.icon;
@@ -117,7 +117,7 @@ const AdminPanel: React.FC = () => {
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
+                  className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-2 lg:px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
@@ -128,7 +128,7 @@ const AdminPanel: React.FC = () => {
                   }}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                  <span className="font-medium text-xs lg:text-sm">{section.label}</span>
+                  <span className="font-medium text-xs">{section.label}</span>
                 </button>
               );
             })}
@@ -145,9 +145,9 @@ const AdminPanel: React.FC = () => {
       )}
       
       {/* Main Content */}
-      <div className="lg:ml-64">
+      <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b border-gray-200 p-4">
+        <div className="lg:hidden bg-white border-b border-gray-200 p-3">
           <div className="flex items-center justify-between">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
@@ -155,11 +155,11 @@ const AdminPanel: React.FC = () => {
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-bold text-gray-900">Admin Panel</h1>
+            <h1 className="text-base font-bold text-gray-900">Admin Panel</h1>
           </div>
         </div>
         
-        <div className="p-3 lg:p-6">
+        <div className="p-3 lg:p-4">
         {renderContent()}
         </div>
       </div>
