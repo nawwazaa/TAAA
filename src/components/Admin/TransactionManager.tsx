@@ -410,15 +410,15 @@ const TransactionManager: React.FC = () => {
       </div>
 
       {/* Summary Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Transactions</p>
-              <p className="text-3xl font-bold text-gray-900">{totalTransactions}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Total Transactions</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{totalTransactions}</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-3 rounded-lg">
-              <BarChart3 className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-2 md:p-3 rounded-lg">
+              <BarChart3 className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -426,23 +426,11 @@ const TransactionManager: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">${totalRevenue.toFixed(2)}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Total Revenue</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">${totalRevenue.toFixed(2)}</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
-              <DollarSign className="w-6 h-6 text-white" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm">Pending Reviews</p>
-              <p className="text-3xl font-bold text-gray-900">{pendingTransactions}</p>
-            </div>
-            <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-lg">
-              <Clock className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
+              <DollarSign className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -450,11 +438,23 @@ const TransactionManager: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Support Tickets</p>
-              <p className="text-3xl font-bold text-gray-900">{supportTickets}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Pending Reviews</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{pendingTransactions}</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
-              <MessageCircle className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-2 md:p-3 rounded-lg">
+              <Clock className="w-4 h-4 md:w-6 md:h-6 text-white" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-600 text-xs md:text-sm">Support Tickets</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{supportTickets}</p>
+            </div>
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 md:p-3 rounded-lg">
+              <MessageCircle className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -476,11 +476,11 @@ const TransactionManager: React.FC = () => {
           </div>
 
           {/* Filter Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs md:text-sm"
             >
               <option value="all">All Status</option>
               <option value="pending">⏳ Pending</option>
@@ -493,7 +493,7 @@ const TransactionManager: React.FC = () => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value as any)}
-              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs md:text-sm"
             >
               <option value="all">All Types</option>
               <option value="purchase">🛒 Purchase</option>
@@ -508,7 +508,7 @@ const TransactionManager: React.FC = () => {
             <select
               value={currencyFilter}
               onChange={(e) => setCurrencyFilter(e.target.value as any)}
-              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs md:text-sm"
             >
               <option value="all">All Currencies</option>
               <option value="FB">🪙 Flixbits</option>
@@ -522,7 +522,7 @@ const TransactionManager: React.FC = () => {
               type="date"
               value={dateRange.start}
               onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs md:text-sm"
               placeholder="Start Date"
             />
 
@@ -530,25 +530,27 @@ const TransactionManager: React.FC = () => {
               type="date"
               value={dateRange.end}
               onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs md:text-sm"
               placeholder="End Date"
             />
 
             <button
               onClick={exportTransactions}
-              className="bg-green-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center space-x-1 md:space-x-2 rtl:space-x-reverse text-sm"
+              className="bg-green-600 text-white px-2 md:px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center space-x-1 md:space-x-2 rtl:space-x-reverse text-xs md:text-sm col-span-2 sm:col-span-1"
             >
               <Download className="w-4 h-4" />
               <span className="hidden sm:inline">Export</span>
+              <span className="sm:hidden">CSV</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Desktop Table View */}
-        <div className="hidden lg:block overflow-x-auto">
+        <div className="hidden lg:block">
+          <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -647,27 +649,28 @@ const TransactionManager: React.FC = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* Mobile Card View */}
-        <div className="lg:hidden space-y-3 p-3">
+        <div className="lg:hidden space-y-3 p-2">
           {filteredTransactions.map((transaction) => (
-            <div key={transaction.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+            <div key={transaction.id} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               {/* Transaction Header */}
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-2 rtl:space-x-reverse">
                   {getTypeIcon(transaction.type)}
                   <div>
-                    <div className="text-sm font-medium text-gray-900 truncate max-w-[120px]">{transaction.id}</div>
+                    <div className="text-xs font-medium text-gray-900 truncate max-w-[100px]">{transaction.id}</div>
                     <div className="text-xs text-gray-500 capitalize">{transaction.type}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end space-y-1 flex-shrink-0">
+                <div className="flex flex-col items-end space-y-1 flex-shrink-0 min-w-0">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(transaction.status)}`}>
                     {transaction.status}
                   </span>
                   {transaction.customerSupport?.status !== 'none' && (
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getSupportStatusColor(transaction.customerSupport?.status || 'none')}`}>
+                    <span className={`inline-flex px-1 py-0.5 text-xs font-semibold rounded-full ${getSupportStatusColor(transaction.customerSupport?.status || 'none')}`}>
                       {transaction.customerSupport?.status}
                     </span>
                   )}
@@ -675,16 +678,16 @@ const TransactionManager: React.FC = () => {
               </div>
 
               {/* Customer Info */}
-              <div className="mb-3">
-                <div className="text-sm font-medium text-gray-900 mb-1 truncate">{transaction.userName}</div>
+              <div className="mb-2">
+                <div className="text-xs font-medium text-gray-900 mb-1 truncate">{transaction.userName}</div>
                 <div className="text-xs text-gray-500 truncate">{transaction.userEmail}</div>
                 <div className="text-xs text-gray-500">{transaction.userPhone}</div>
               </div>
 
               {/* Amount and Date */}
-              <div className="flex justify-between items-center mb-3">
+              <div className="flex justify-between items-center mb-2">
                 <div>
-                  <div className="text-base font-bold text-gray-900">
+                  <div className="text-sm font-bold text-gray-900">
                     {transaction.amount} {transaction.currency}
                   </div>
                   <div className="text-xs text-gray-500">
@@ -703,8 +706,8 @@ const TransactionManager: React.FC = () => {
               </div>
 
               {/* Description */}
-              <div className="mb-3">
-                <div className="text-sm text-gray-600 line-clamp-2 mb-1">{transaction.description}</div>
+              <div className="mb-2">
+                <div className="text-xs text-gray-600 line-clamp-2 mb-1">{transaction.description}</div>
                 <div className="text-xs text-gray-500 mt-1">Payment: {transaction.paymentMethod}</div>
                 {transaction.gatewayTransactionId && (
                   <div className="text-xs text-gray-400 font-mono mt-1 truncate">{transaction.gatewayTransactionId}</div>
@@ -713,7 +716,7 @@ const TransactionManager: React.FC = () => {
 
               {/* Support Messages */}
               {transaction.customerSupport?.messages && transaction.customerSupport.messages.length > 0 && (
-                <div className="mb-3 p-2 bg-blue-50 rounded-lg">
+                <div className="mb-2 p-2 bg-blue-50 rounded-lg">
                   <div className="text-xs text-blue-600 font-medium">
                     💬 {transaction.customerSupport.messages.length} support message(s)
                   </div>
@@ -721,16 +724,16 @@ const TransactionManager: React.FC = () => {
               )}
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex gap-2">
                 <button
                   onClick={() => {
                     setSelectedTransaction(transaction);
                     setShowTransactionDetails(true);
                   }}
-                  className="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
+                  className="flex-1 bg-blue-500 text-white py-2 px-2 rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
                 >
                   <Eye className="w-4 h-4" />
-                  <span>View Details</span>
+                  <span>View</span>
                 </button>
                 {transaction.customerSupport?.status !== 'none' && (
                   <button
@@ -738,10 +741,10 @@ const TransactionManager: React.FC = () => {
                       setSelectedTransaction(transaction);
                       setShowCustomerSupport(true);
                     }}
-                    className="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+                    className="flex-1 bg-green-500 text-white py-2 px-2 rounded-lg text-xs font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Support</span>
+                    <span>Chat</span>
                   </button>
                 )}
               </div>
