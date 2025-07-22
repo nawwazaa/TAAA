@@ -408,41 +408,41 @@ const RoleManagement: React.FC = () => {
       {/* Tab Navigation */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-0 rtl:space-x-reverse">
+          <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('sub-admins')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'sub-admins'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Users className="w-5 h-5" />
-              <span className="font-medium">Sub-Admins</span>
+              <span className="font-medium text-sm md:text-base">Sub-Admins</span>
             </button>
             
             <button
               onClick={() => setActiveTab('roles')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'roles'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Shield className="w-5 h-5" />
-              <span className="font-medium">Roles</span>
+              <span className="font-medium text-sm md:text-base">Roles</span>
             </button>
             
             <button
               onClick={() => setActiveTab('permissions')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'permissions'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Key className="w-5 h-5" />
-              <span className="font-medium">Permissions</span>
+              <span className="font-medium text-sm md:text-base">Permissions</span>
             </button>
           </nav>
         </div>
@@ -451,11 +451,11 @@ const RoleManagement: React.FC = () => {
           {/* Sub-Admins Tab */}
           {activeTab === 'sub-admins' && (
             <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-gray-900">Sub-Administrators</h2>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900">Sub-Administrators</h2>
                 <button
                   onClick={() => setShowCreateSubAdmin(true)}
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center space-x-2 rtl:space-x-reverse"
+                  className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
                 >
                   <UserPlus className="w-5 h-5" />
                   <span>Create Sub-Admin</span>
@@ -544,13 +544,13 @@ const RoleManagement: React.FC = () => {
           {/* Roles Tab */}
           {activeTab === 'roles' && (
             <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-gray-900">Available Roles</h2>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900">Available Roles</h2>
                 <button
                   onClick={() => setShowCreateRole(true)}
-                  className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:from-green-700 hover:to-blue-700 transition-colors flex items-center space-x-2 rtl:space-x-reverse"
+                  className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-blue-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:from-green-700 hover:to-blue-700 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-4 md:w-5 h-4 md:h-5" />
                   <span>Create Role</span>
                 </button>
               </div>
@@ -608,7 +608,7 @@ const RoleManagement: React.FC = () => {
           {/* Permissions Tab */}
           {activeTab === 'permissions' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold text-gray-900">Available Permissions</h2>
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">Available Permissions</h2>
               
               {Object.entries(
                 allPermissions.reduce((acc, permission) => {
