@@ -197,85 +197,129 @@ const ReferralSystem: React.FC = () => {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 text-xs md:text-sm">Total Referrals</p>
-                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{totalReferrals}</p>
-                    </div>
-                    <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-2 md:p-3 rounded-lg">
-                      <Users className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 text-xs md:text-sm">Pending Referrals</p>
-                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{pendingReferrals}</p>
-                    </div>
-                    <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-2 md:p-3 rounded-lg">
-                      <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 text-xs md:text-sm">Total Earned</p>
-                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{totalEarned} FB</p>
-                    </div>
-                    <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
-                      <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Referral Code Section */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
-                <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Your Referral Code</h2>
-                
-                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
-                  <div className="flex flex-col md:flex-row justify-between items-center">
-                    <div className="text-center md:text-left mb-4 md:mb-0">
-                      <p className="text-gray-600 mb-2">Share this code with friends</p>
-                      <div className="flex items-center justify-center md:justify-start space-x-2 rtl:space-x-reverse">
-                        <span className="text-xl md:text-2xl font-bold text-purple-600 font-mono">{referralCode}</span>
-                        <button
-                          onClick={handleCopyReferralCode}
-                          className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
-                        >
-                          <Copy className="w-5 h-5 text-gray-600" />
+                    <div className="space-y-4">
+                      {/* Search and Filter */}
+                      <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex-1 relative">
+                          <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                          <input
+                            type="text"
+                            placeholder="Search referrals..."
+                            className="w-full pl-10 rtl:pl-3 rtl:pr-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          />
+                        </div>
+                        
+                        <select className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                          <option value="all">All Status</option>
+                          <option value="pending">Pending</option>
+                          <option value="completed">Completed</option>
+                          <option value="expired">Expired</option>
+                        </select>
+                        
+                        <button className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center space-x-2 rtl:space-x-reverse">
+                          <Download className="w-4 h-4" />
+                          <span>Export</span>
                         </button>
                       </div>
-                    </div>
-                    
-                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 rtl:space-x-reverse w-full md:w-auto">
-                      <button
-                        onClick={handleCopyReferralLink}
-                        className="w-full sm:w-auto bg-white text-purple-600 border border-purple-200 px-3 md:px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
-                      >
-                        <Link className="w-4 h-4 md:w-5 md:h-5" />
-                        <span>Copy Link</span>
-                      </button>
-                      
-                      <button
-                        onClick={handleShareReferral}
-                        className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
-                      >
-                        <Share2 className="w-4 h-4 md:w-5 md:h-5" />
-                        <span>Share</span>
-                      </button>
-                    </div>
-                  </div>
-                  
-                  {copiedToClipboard && (
-                    <div className="mt-4 text-center text-green-600">
-                      <CheckCircle className="w-4 h-4 inline mr-2 rtl:mr-0 rtl:ml-2" />
-                      Copied to clipboard!
+
+                      {/* Desktop Table View */}
+                      <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                              <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bonus</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                              {referrals.filter(ref => ref.referrerId === user?.id).map((referral) => (
+                                <tr key={referral.id} className="hover:bg-gray-50">
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="flex items-center">
+                                      <div className="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <User className="h-5 w-5 text-purple-600" />
+                                      </div>
+                                      <div className="ml-4 rtl:ml-0 rtl:mr-4">
+                                        <div className="text-sm font-medium text-gray-900">{referral.referredName}</div>
+                                        <div className="text-sm text-gray-500">{referral.referredId}</div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {referral.createdAt.toLocaleDateString()}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                      referral.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                      referral.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                      'bg-red-100 text-red-800'
+                                    }`}>
+                                      {referral.status}
+                                    </span>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-900">{referral.bonusAmount} FB</div>
+                                    <div className="text-xs text-gray-500">{referral.bonusPaid ? 'Paid' : 'Pending'}</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button className="text-purple-600 hover:text-purple-900">
+                                      View Details
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* Mobile Card View */}
+                      <div className="lg:hidden space-y-4">
+                        {referrals.filter(ref => ref.referrerId === user?.id).map((referral) => (
+                          <div key={referral.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                                <div className="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                  <User className="h-5 w-5 text-purple-600" />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-medium text-gray-900">{referral.referredName}</div>
+                                  <div className="text-xs text-gray-500">{referral.referredId}</div>
+                                </div>
+                              </div>
+                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                referral.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                referral.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-red-100 text-red-800'
+                              }`}>
+                                {referral.status}
+                              </span>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                              <div>
+                                <p className="text-gray-600">Date</p>
+                                <p className="font-medium">{referral.createdAt.toLocaleDateString()}</p>
+                              </div>
+                              <div>
+                                <p className="text-gray-600">Bonus</p>
+                                <p className="font-medium">{referral.bonusAmount} FB</p>
+                                <p className="text-xs text-gray-500">{referral.bonusPaid ? 'Paid' : 'Pending'}</p>
+                              </div>
+                            </div>
+                            
+                            <div className="mt-3 pt-3 border-t border-gray-200">
+                              <button className="text-purple-600 hover:text-purple-900 text-sm font-medium">
+                                View Details
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
