@@ -546,8 +546,9 @@ const TransactionManager: React.FC = () => {
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -646,6 +647,106 @@ const TransactionManager: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="lg:hidden divide-y divide-gray-200">
+          {filteredTransactions.map((transaction) => (
+            <div key={transaction.id} className="p-4 hover:bg-gray-50">
+              {/* Transaction Header */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  {getTypeIcon(transaction.type)}
+                  <div>
+                    <div className="text-sm font-medium text-gray-900">{transaction.id}</div>
+                    <div className="text-xs text-gray-500 capitalize">{transaction.type}</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end space-y-1">
+                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(transaction.status)}`}>
+                    {transaction.status}
+                  </span>
+                  {transaction.customerSupport?.status !== 'none' && (
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getSupportStatusColor(transaction.customerSupport?.status || 'none')}`}>
+                      {transaction.customerSupport?.status}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Customer Info */}
+              <div className="mb-3">
+                <div className="text-sm font-medium text-gray-900 mb-1">{transaction.userName}</div>
+                <div className="text-xs text-gray-500">{transaction.userEmail}</div>
+                <div className="text-xs text-gray-500">{transaction.userPhone}</div>
+              </div>
+
+              {/* Amount and Date */}
+              <div className="flex justify-between items-center mb-3">
+                <div>
+                  <div className="text-sm font-medium text-gray-900">
+                    {transaction.amount} {transaction.currency}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    ${transaction.usdEquivalent.toFixed(2)} USD
+                  </div>
+                  {transaction.fees !== 0 && (
+                    <div className="text-xs text-gray-400">
+                      Fee: {transaction.fees > 0 ? '+' : ''}{transaction.fees.toFixed(2)}
+                    </div>
+                  )}
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleDateString()}</div>
+                  <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleTimeString()}</div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mb-3">
+                <div className="text-sm text-gray-600 line-clamp-2">{transaction.description}</div>
+                <div className="text-xs text-gray-500 mt-1">Payment: {transaction.paymentMethod}</div>
+                {transaction.gatewayTransactionId && (
+                  <div className="text-xs text-gray-400 font-mono mt-1">{transaction.gatewayTransactionId}</div>
+                )}
+              </div>
+
+              {/* Support Messages */}
+              {transaction.customerSupport?.messages && transaction.customerSupport.messages.length > 0 && (
+                <div className="mb-3">
+                  <div className="text-xs text-gray-500">
+                    💬 {transaction.customerSupport.messages.length} support message(s)
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex space-x-2 rtl:space-x-reverse">
+                <button
+                  onClick={() => {
+                    setSelectedTransaction(transaction);
+                    setShowTransactionDetails(true);
+                  }}
+                  className="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>View Details</span>
+                </button>
+                {transaction.customerSupport?.status !== 'none' && (
+                  <button
+                    onClick={() => {
+                      setSelectedTransaction(transaction);
+                      setShowCustomerSupport(true);
+                    }}
+                    className="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Support</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
