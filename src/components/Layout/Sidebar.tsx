@@ -140,8 +140,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 title={isCollapsed ? item.label : ''}
               >
                 <Icon className={`${isCollapsed ? 'w-10 h-10' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                <Icon className={`${isCollapsed ? 'w-8 h-8' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                <Icon className={`${isCollapsed ? 'w-10 h-10' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
                 {!isCollapsed && (
                   <span className="font-medium text-sm">{item.label}</span>
                 )}
