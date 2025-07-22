@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
-            {isCollapsed ? (
+            {!isCollapsed ? (
               <Menu className="w-5 h-5 text-gray-600" />
             ) : (
               <X className="w-5 h-5 text-gray-600" />
@@ -143,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 }`}
                 title={isCollapsed ? item.label : ''}
               >
-                <Icon className={`${isCollapsed ? 'w-7 h-7' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                <Icon className={`${isCollapsed ? 'w-10 h-10' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
                 {!isCollapsed && (
                   <span className="font-medium text-sm">{item.label}</span>
                 )}
