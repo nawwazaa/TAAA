@@ -94,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           </button>
         </div>
         
-        <nav className="flex-1 px-2 md:px-4 py-3 md:py-6 space-y-1 md:space-y-2">
+        <nav className={`flex-1 px-2 md:px-4 py-3 md:py-6 ${isCollapsed ? 'space-y-1' : 'space-y-1 md:space-y-2'}`}>
           {/* Mobile: Horizontal scroll menu */}
           <div className="md:hidden">
             <div className="flex space-x-2 rtl:space-x-reverse overflow-x-auto pb-2">
@@ -130,8 +130,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
-                className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative ${
-                  isCollapsed ? 'justify-center' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
+                className={`w-full flex items-center rounded-lg transition-all duration-200 group relative ${
+                  isCollapsed ? 'justify-center px-2 py-1' : 'px-3 py-2 space-x-3 rtl:space-x-reverse text-left rtl:text-right'
                 } ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
@@ -139,7 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 }`}
                 title={isCollapsed ? item.label : ''}
               >
-                <Icon className={`${isCollapsed ? 'w-20 h-20' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                <Icon className={`${isCollapsed ? 'w-8 h-8' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
                 {!isCollapsed && (
                   <span className="font-medium text-sm">{item.label}</span>
                 )}
