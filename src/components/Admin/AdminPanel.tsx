@@ -86,7 +86,7 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Admin Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
         isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -159,7 +159,7 @@ const AdminPanel: React.FC = () => {
           </div>
         </div>
         
-        <div className="p-3 lg:p-4">
+        <div className="p-3 lg:p-6">
         {renderContent()}
         </div>
       </div>
