@@ -370,65 +370,65 @@ const NotificationSystem: React.FC = () => {
       {/* Tab Navigation */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-0 rtl:space-x-reverse">
+          <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('packages')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'packages'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Package className="w-5 h-5" />
-              <span className="font-medium">Packages</span>
+              <span className="font-medium text-sm md:text-base">Packages</span>
             </button>
             
             <button
               onClick={() => setActiveTab('subscriptions')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'subscriptions'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Users className="w-5 h-5" />
-              <span className="font-medium">Subscriptions</span>
+              <span className="font-medium text-sm md:text-base">Subscriptions</span>
             </button>
             
             <button
               onClick={() => setActiveTab('campaigns')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'campaigns'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Send className="w-5 h-5" />
-              <span className="font-medium">Campaigns</span>
+              <span className="font-medium text-sm md:text-base">Campaigns</span>
             </button>
             
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'analytics'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <BarChart3 className="w-5 h-5" />
-              <span className="font-medium">Analytics</span>
+              <span className="font-medium text-sm md:text-base">Analytics</span>
             </button>
             
             <button
               onClick={() => setActiveTab('settings')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'settings'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Settings className="w-5 h-5" />
-              <span className="font-medium">Settings</span>
+              <span className="font-medium text-sm md:text-base">Settings</span>
             </button>
           </nav>
         </div>

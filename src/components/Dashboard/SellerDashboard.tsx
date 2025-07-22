@@ -83,51 +83,51 @@ const SellerDashboard: React.FC = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Active Offers</p>
-              <p className="text-3xl font-bold text-gray-900">{activeOffers.length}</p>
+              <p className="text-gray-600 text-xs md:text-sm">Active Offers</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">{activeOffers.length}</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-3 rounded-lg">
-              <ShoppingBag className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-2 md:p-3 rounded-lg">
+              <ShoppingBag className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Views</p>
-              <p className="text-3xl font-bold text-gray-900">1,234</p>
+              <p className="text-gray-600 text-xs md:text-sm">Total Views</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">1,234</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
-              <BarChart3 className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
+              <BarChart3 className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Followers</p>
-              <p className="text-3xl font-bold text-gray-900">567</p>
+              <p className="text-gray-600 text-xs md:text-sm">Followers</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">567</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
-              <Users className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 md:p-3 rounded-lg">
+              <Users className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">$2,450</p>
+              <p className="text-gray-600 text-xs md:text-sm">Revenue</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-900">$2,450</p>
             </div>
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-3 rounded-lg">
-              <DollarSign className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 md:p-3 rounded-lg">
+              <DollarSign className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>

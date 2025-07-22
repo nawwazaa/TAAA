@@ -308,65 +308,65 @@ const TapPaymentGateway: React.FC = () => {
       {/* Tab Navigation */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-0 rtl:space-x-reverse">
+          <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('config')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'config'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Settings className="w-5 h-5" />
-              <span className="font-medium">Configuration</span>
+              <span className="font-medium text-sm md:text-base">Configuration</span>
             </button>
             
             <button
               onClick={() => setActiveTab('methods')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'methods'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <CreditCard className="w-5 h-5" />
-              <span className="font-medium">Payment Methods</span>
+              <span className="font-medium text-sm md:text-base">Payment Methods</span>
             </button>
             
             <button
               onClick={() => setActiveTab('transactions')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'transactions'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <DollarSign className="w-5 h-5" />
-              <span className="font-medium">Transactions</span>
+              <span className="font-medium text-sm md:text-base">Transactions</span>
             </button>
             
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'analytics'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <BarChart3 className="w-5 h-5" />
-              <span className="font-medium">Analytics</span>
+              <span className="font-medium text-sm md:text-base">Analytics</span>
             </button>
             
             <button
               onClick={() => setActiveTab('webhooks')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'webhooks'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Globe className="w-5 h-5" />
-              <span className="font-medium">Webhooks</span>
+              <span className="font-medium text-sm md:text-base">Webhooks</span>
             </button>
           </nav>
         </div>

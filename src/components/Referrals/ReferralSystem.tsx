@@ -143,50 +143,50 @@ const ReferralSystem: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'overview'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Gift className="w-5 h-5" />
-              <span className="font-medium">Overview</span>
+              <span className="font-medium text-sm md:text-base">Overview</span>
             </button>
             
             <button
               onClick={() => setActiveTab('my-referrals')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'my-referrals'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Users className="w-5 h-5" />
-              <span className="font-medium">My Referrals</span>
+              <span className="font-medium text-sm md:text-base">My Referrals</span>
             </button>
             
             <button
               onClick={() => setActiveTab('leaderboard')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'leaderboard'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Award className="w-5 h-5" />
-              <span className="font-medium">Leaderboard</span>
+              <span className="font-medium text-sm md:text-base">Leaderboard</span>
             </button>
             
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'history'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Clock className="w-5 h-5" />
-              <span className="font-medium">History</span>
+              <span className="font-medium text-sm md:text-base">History</span>
             </button>
           </nav>
         </div>
@@ -196,54 +196,54 @@ const ReferralSystem: React.FC = () => {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-gray-600 text-sm">Total Referrals</p>
-                      <p className="text-3xl font-bold text-gray-900">{totalReferrals}</p>
+                      <p className="text-gray-600 text-xs md:text-sm">Total Referrals</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{totalReferrals}</p>
                     </div>
-                    <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg">
-                      <Users className="w-6 h-6 text-white" />
+                    <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-2 md:p-3 rounded-lg">
+                      <Users className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-gray-600 text-sm">Pending Referrals</p>
-                      <p className="text-3xl font-bold text-gray-900">{pendingReferrals}</p>
+                      <p className="text-gray-600 text-xs md:text-sm">Pending Referrals</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{pendingReferrals}</p>
                     </div>
-                    <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-lg">
-                      <Clock className="w-6 h-6 text-white" />
+                    <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-2 md:p-3 rounded-lg">
+                      <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-gray-600 text-sm">Total Earned</p>
-                      <p className="text-3xl font-bold text-gray-900">{totalEarned} FB</p>
+                      <p className="text-gray-600 text-xs md:text-sm">Total Earned</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">{totalEarned} FB</p>
                     </div>
-                    <div className="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
-                      <DollarSign className="w-6 h-6 text-white" />
+                    <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
+                      <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Referral Code Section */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Your Referral Code</h2>
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Your Referral Code</h2>
                 
-                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6 mb-6">
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="text-center md:text-left mb-4 md:mb-0">
                       <p className="text-gray-600 mb-2">Share this code with friends</p>
                       <div className="flex items-center justify-center md:justify-start space-x-2 rtl:space-x-reverse">
-                        <span className="text-2xl font-bold text-purple-600 font-mono">{referralCode}</span>
+                        <span className="text-xl md:text-2xl font-bold text-purple-600 font-mono">{referralCode}</span>
                         <button
                           onClick={handleCopyReferralCode}
                           className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
@@ -253,20 +253,20 @@ const ReferralSystem: React.FC = () => {
                       </div>
                     </div>
                     
-                    <div className="flex space-x-3 rtl:space-x-reverse">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 rtl:space-x-reverse w-full md:w-auto">
                       <button
                         onClick={handleCopyReferralLink}
-                        className="bg-white text-purple-600 border border-purple-200 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors flex items-center space-x-2 rtl:space-x-reverse"
+                        className="w-full sm:w-auto bg-white text-purple-600 border border-purple-200 px-3 md:px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
                       >
-                        <Link className="w-5 h-5" />
+                        <Link className="w-4 h-4 md:w-5 md:h-5" />
                         <span>Copy Link</span>
                       </button>
                       
                       <button
                         onClick={handleShareReferral}
-                        className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center space-x-2 rtl:space-x-reverse"
+                        className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm md:text-base"
                       >
-                        <Share2 className="w-5 h-5" />
+                        <Share2 className="w-4 h-4 md:w-5 md:h-5" />
                         <span>Share</span>
                       </button>
                     </div>

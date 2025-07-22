@@ -117,38 +117,38 @@ const GamePredictions: React.FC = () => {
 
       {/* User Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-xs md:text-sm">Your Flixbits</p>
-              <p className="text-xl md:text-3xl font-bold text-gray-900">{user?.flixbits.toLocaleString()}</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900">{user?.flixbits.toLocaleString()}</p>
             </div>
             <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 md:p-3 rounded-lg">
-              <Star className="w-4 h-4 md:w-6 md:h-6 text-white" />
+              <Star className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-xs md:text-sm">Predictions Made</p>
-              <p className="text-xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length}</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length}</p>
             </div>
             <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 md:p-3 rounded-lg">
-              <Target className="w-4 h-4 md:w-6 md:h-6 text-white" />
+              <Target className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-xs md:text-sm">Potential Earnings</p>
-              <p className="text-xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length * 50}</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900">{Object.keys(selectedPredictions).length * 50}</p>
             </div>
             <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 md:p-3 rounded-lg">
-              <Trophy className="w-4 h-4 md:w-6 md:h-6 text-white" />
+              <Trophy className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>

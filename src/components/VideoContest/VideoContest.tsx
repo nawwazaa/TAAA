@@ -258,42 +258,42 @@ const VideoContest: React.FC = () => {
       {/* Tab Navigation */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-0 rtl:space-x-reverse">
+          <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('browse')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'browse'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Video className="w-5 h-5" />
-              <span className="font-medium">Browse Videos</span>
+              <span className="font-medium text-sm md:text-base">Browse Videos</span>
             </button>
             
             <button
               onClick={() => setActiveTab('submit')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'submit'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Upload className="w-5 h-5" />
-              <span className="font-medium">Submit Video</span>
+              <span className="font-medium text-sm md:text-base">Submit Video</span>
             </button>
             
             {(user?.userType === 'seller' || user?.userType === 'influencer' || user?.email === 'admin@flixmarket.com') && (
               <button
                 onClick={() => setActiveTab('manage')}
-                className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+                className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === 'manage'
                     ? 'border-purple-500 text-purple-600 bg-purple-50'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <Settings className="w-5 h-5" />
-                <span className="font-medium">Manage Contests</span>
+                <span className="font-medium text-sm md:text-base">Manage Contests</span>
               </button>
             )}
           </nav>

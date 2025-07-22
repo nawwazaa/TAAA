@@ -231,41 +231,41 @@ const OfferManager: React.FC = () => {
       {/* Main Navigation - 3 Clear Options */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-0 rtl:space-x-reverse">
+          <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('browse')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'browse'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Eye className="w-5 h-5" />
-              <span className="font-medium">Browse Items</span>
+              <span className="font-medium text-sm md:text-base">Browse Items</span>
             </button>
             
             <button
               onClick={() => setActiveTab('my-purchases')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'my-purchases'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <ShoppingBag className="w-5 h-5" />
-              <span className="font-medium">My Purchases</span>
+              <span className="font-medium text-sm md:text-base">My Purchases</span>
             </button>
             
             <button
               onClick={() => setActiveTab('create-item')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-6 py-4 border-b-2 transition-colors ${
+              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'create-item'
                   ? 'border-green-500 text-green-600 bg-green-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Plus className="w-5 h-5" />
-              <span className="font-medium">Create Sell</span>
+              <span className="font-medium text-sm md:text-base">Create Sell</span>
             </button>
           </nav>
         </div>
