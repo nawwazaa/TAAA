@@ -547,8 +547,8 @@ const TransactionManager: React.FC = () => {
 
       {/* Transactions Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        {/* Desktop Table View */}
-        <div className="hidden xl:block overflow-x-auto">
+        {/* Desktop Table View - Only show on large screens */}
+        <div className="hidden lg:block">
           <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -651,85 +651,89 @@ const TransactionManager: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Card View */}
-        <div className="xl:hidden space-y-3 p-3">
+        {/* Mobile Card View - Show on mobile and tablet */}
+        <div className="lg:hidden">
+          <div className="p-3 space-y-3">
           {filteredTransactions.map((transaction) => (
-            <div key={transaction.id} className="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">
+            <div key={transaction.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
               {/* Transaction Header */}
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-100">
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   {getTypeIcon(transaction.type)}
-                  <div className="min-w-0 flex-1">
-                    <div className="text-xs font-medium text-gray-900 truncate">{transaction.id}</div>
+                  <div>
+                    <div className="text-sm font-bold text-gray-900">{transaction.id}</div>
                     <div className="text-xs text-gray-500 capitalize">{transaction.type}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end space-y-1 flex-shrink-0">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(transaction.status)}`}>
-                    {transaction.status}
-                  </span>
-                  {transaction.customerSupport?.status !== 'none' && (
-                    <span className={`inline-flex px-1 py-0.5 text-xs font-semibold rounded-full ${getSupportStatusColor(transaction.customerSupport?.status || 'none')}`}>
-                      {transaction.customerSupport?.status}
-                    </span>
-                  )}
-                </div>
+                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(transaction.status)}`}>
+                  {transaction.status}
+                </span>
               </div>
 
-              {/* Customer Info */}
-              <div className="mb-3">
-                <div className="text-sm font-medium text-gray-900 mb-1 truncate">{transaction.userName}</div>
-                <div className="text-xs text-gray-500 truncate">{transaction.userEmail}</div>
-                <div className="text-xs text-gray-500">{transaction.userPhone}</div>
-              </div>
-
-              {/* Amount and Date */}
-              <div className="flex justify-between items-start mb-3">
+              {/* Main Content Grid */}
+              <div className="grid grid-cols-1 gap-3">
+                {/* Customer Info */}
                 <div>
-                  <div className="text-sm font-bold text-gray-900">
-                    {transaction.amount} {transaction.currency}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    ${transaction.usdEquivalent.toFixed(2)} USD
-                  </div>
-                  {transaction.fees !== 0 && (
-                    <div className="text-xs text-gray-400">
-                      Fee: {transaction.fees > 0 ? '+' : ''}{transaction.fees.toFixed(2)}
+                  <div className="text-sm font-medium text-gray-900 mb-1">{transaction.userName}</div>
+                  <div className="text-xs text-gray-500">{transaction.userEmail}</div>
+                  <div className="text-xs text-gray-500">{transaction.userPhone}</div>
+                </div>
+
+                {/* Amount and Payment */}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="text-lg font-bold text-gray-900">
+                      {transaction.amount} {transaction.currency}
                     </div>
+                    <div className="text-xs text-gray-500">
+                      ${transaction.usdEquivalent.toFixed(2)} USD
+                    </div>
+                    {transaction.fees !== 0 && (
+                      <div className="text-xs text-gray-400">
+                        Fee: {transaction.fees > 0 ? '+' : ''}{transaction.fees.toFixed(2)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleDateString()}</div>
+                    <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleTimeString()}</div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <div className="text-sm text-gray-700 mb-1">{transaction.description}</div>
+                  <div className="text-xs text-gray-500">Payment: {transaction.paymentMethod}</div>
+                  {transaction.gatewayTransactionId && (
+                    <div className="text-xs text-gray-400 font-mono mt-1 break-all">{transaction.gatewayTransactionId}</div>
                   )}
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleDateString()}</div>
-                  <div className="text-xs text-gray-500">{transaction.createdAt.toLocaleTimeString()}</div>
-                </div>
-              </div>
 
-              {/* Description */}
-              <div className="mb-3">
-                <div className="text-xs text-gray-600 line-clamp-2 mb-1">{transaction.description}</div>
-                <div className="text-xs text-gray-500">Payment: {transaction.paymentMethod}</div>
-                {transaction.gatewayTransactionId && (
-                  <div className="text-xs text-gray-400 font-mono truncate">{transaction.gatewayTransactionId}</div>
+                {/* Support Status */}
+                {transaction.customerSupport?.status !== 'none' && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-2">
+                    <div className="flex items-center justify-between">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getSupportStatusColor(transaction.customerSupport?.status || 'none')}`}>
+                        Support: {transaction.customerSupport?.status}
+                      </span>
+                      {transaction.customerSupport?.messages && transaction.customerSupport.messages.length > 0 && (
+                        <div className="text-xs text-blue-600 font-medium">
+                          {transaction.customerSupport.messages.length} message(s)
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
 
-              {/* Support Messages */}
-              {transaction.customerSupport?.messages && transaction.customerSupport.messages.length > 0 && (
-                <div className="mb-3 p-2 bg-blue-50 rounded-lg">
-                  <div className="text-xs text-blue-600 font-medium">
-                    💬 {transaction.customerSupport.messages.length} support message(s)
-                  </div>
-                </div>
-              )}
-
               {/* Action Buttons */}
-              <div className="flex gap-2 pt-2 border-t border-gray-200">
+              <div className="flex gap-2 pt-3 mt-3 border-t border-gray-100">
                 <button
                   onClick={() => {
                     setSelectedTransaction(transaction);
                     setShowTransactionDetails(true);
                   }}
-                  className="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
+                  className="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
                 >
                   <Eye className="w-4 h-4" />
                   <span>View</span>
@@ -749,6 +753,7 @@ const TransactionManager: React.FC = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 
