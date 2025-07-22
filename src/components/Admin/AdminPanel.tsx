@@ -20,7 +20,9 @@ import {
   Star,
   Crown,
   Package,
-  Brain
+  Brain,
+  Menu,
+  X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NotificationSystem from './NotificationSystem';
@@ -37,6 +39,7 @@ const AdminPanel: React.FC = () => {
   const isRTL = i18n.language === 'ar';
   
   const [activeSection, setActiveSection] = useState('overview');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const adminSections = [
     { id: 'overview', label: 'Dashboard Overview', icon: BarChart3 },
@@ -83,15 +86,25 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`flex ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Admin Sidebar */}
-      <div className="w-64 bg-white shadow-lg border-r border-gray-200 min-h-screen">
-        <div className="p-6 border-b border-gray-200">
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+        isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      } ${isRTL ? 'right-0 left-auto' : ''}`}>
+        <div className="p-4 lg:p-6 border-b border-gray-200">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <Shield className="w-6 h-6 text-blue-600" />
-            <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+            <h1 className="text-lg lg:text-xl font-bold text-gray-900">Admin Panel</h1>
           </div>
-          <p className="text-gray-600 text-sm mt-1">Complete System Control</p>
+          <p className="text-gray-600 text-xs lg:text-sm mt-1">Complete System Control</p>
+          
+          {/* Mobile Close Button */}
+          <button
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
         
         <nav className="p-4">
@@ -109,9 +122,13 @@ const AdminPanel: React.FC = () => {
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                   }`}
+                  onClick={() => {
+                    setActiveSection(section.id);
+                    setIsMobileSidebarOpen(false);
+                  }}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                  <span className="font-medium text-sm">{section.label}</span>
+                  <span className="font-medium text-xs lg:text-sm">{section.label}</span>
                 </button>
               );
             })}
@@ -119,9 +136,32 @@ const AdminPanel: React.FC = () => {
         </nav>
       </div>
       
+      {/* Mobile Overlay */}
+      {isMobileSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+      
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="lg:ml-64 min-h-screen">
+        {/* Mobile Header */}
+        <div className="lg:hidden bg-white border-b border-gray-200 p-4">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setIsMobileSidebarOpen(true)}
+              className="p-2 rounded-lg hover:bg-gray-100"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <h1 className="text-lg font-bold text-gray-900">Admin Panel</h1>
+          </div>
+        </div>
+        
+        <div className="p-4 lg:p-6">
         {renderContent()}
+        </div>
       </div>
     </div>
   );
