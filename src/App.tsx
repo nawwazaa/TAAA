@@ -18,7 +18,7 @@ import EventsManager from './components/Events/EventsManager';
 import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
-import { QrCode, Video, Wallet, Plus, Minus, Gift, Menu, X } from 'lucide-react';
+import { QrCode, Video, Wallet, Plus, Minus, Gift } from 'lucide-react';
 import './i18n';
 
 const AppContent: React.FC = () => {
@@ -26,7 +26,6 @@ const AppContent: React.FC = () => {
   const { i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState<'web' | 'ios'>('web');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     document.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
@@ -259,7 +258,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gray-50 ${i18n.language === 'ar' ? 'rtl' : 'ltr'} relative overflow-x-hidden`}>
+    <div className={`min-h-screen bg-gray-50 ${i18n.language === 'ar' ? 'rtl' : 'ltr'} relative`}>
       {/* View Mode Toggle */}
       <div className="fixed top-4 right-4 z-50 hidden md:block">
         <button
@@ -272,23 +271,8 @@ const AppContent: React.FC = () => {
       
       <Header />
       <div className="flex flex-col md:flex-row">
-        <Sidebar 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab}
-          collapsed={sidebarCollapsed}
-          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-        />
-        <main className={`flex-1 p-3 md:p-6 w-full transition-all duration-300 ${
-          sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
-        }`}>
-          {/* Mobile Sidebar Toggle */}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="md:hidden fixed top-20 left-4 z-40 bg-white shadow-lg rounded-full p-2 border border-gray-200"
-          >
-            {sidebarCollapsed ? <Menu className="w-5 h-5" /> : <X className="w-5 h-5" />}
-          </button>
-          
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        <main className="flex-1 p-3 md:p-6 w-full">
           {renderMainContent()}
         </main>
       </div>
