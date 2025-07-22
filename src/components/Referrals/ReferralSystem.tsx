@@ -649,80 +649,82 @@ const ReferralSystem: React.FC = () => {
                   <p className="text-gray-600 mb-4">You haven't been referred by anyone yet.</p>
                 </div>
               ) : (
-                <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referred By</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Used</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bonus</th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {referrals.filter(ref => ref.referredId === user?.id).map((referral) => (
-                          <tr key={referral.id} className="hover:bg-gray-50">
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                  <User className="h-5 w-5 text-blue-600" />
-                                </div>
-                                <div className="ml-4 rtl:ml-0 rtl:mr-4">
-                                  <div className="text-sm font-medium text-gray-900">{referral.referrerName}</div>
-                                  <div className="text-sm text-gray-500">{referral.referrerId}</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {referral.createdAt.toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">
-                              {referral.referralCode}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">{referral.bonusAmount} FB</div>
-                              <div className="text-xs text-gray-500">{referral.bonusPaid ? 'Received' : 'Pending'}</div>
-                            </td>
+                <>
+                  <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referred By</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code Used</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bonus</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
-                {/* Mobile Card View for History */}
-                <div className="lg:hidden space-y-4">
-                  {referrals.filter(ref => ref.referredId === user?.id).map((referral) => (
-                    <div key={referral.id} className="bg-white border border-gray-200 rounded-lg p-4">
-                      <div className="flex items-center space-x-3 rtl:space-x-reverse mb-3">
-                        <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <User className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">{referral.referrerName}</div>
-                          <div className="text-xs text-gray-500">{referral.referrerId}</div>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="text-gray-600">Date</p>
-                          <p className="font-medium">{referral.createdAt.toLocaleDateString()}</p>
-                        </div>
-                        <div>
-                          <p className="text-gray-600">Code Used</p>
-                          <p className="font-mono text-xs">{referral.referralCode}</p>
-                        </div>
-                        <div>
-                          <p className="text-gray-600">Bonus</p>
-                          <p className="font-medium">{referral.bonusAmount} FB</p>
-                          <p className="text-xs text-gray-500">{referral.bonusPaid ? 'Received' : 'Pending'}</p>
-                        </div>
-                      </div>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {referrals.filter(ref => ref.referredId === user?.id).map((referral) => (
+                            <tr key={referral.id} className="hover:bg-gray-50">
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex items-center">
+                                  <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <User className="h-5 w-5 text-blue-600" />
+                                  </div>
+                                  <div className="ml-4 rtl:ml-0 rtl:mr-4">
+                                    <div className="text-sm font-medium text-gray-900">{referral.referrerName}</div>
+                                    <div className="text-sm text-gray-500">{referral.referrerId}</div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {referral.createdAt.toLocaleDateString()}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">
+                                {referral.referralCode}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm text-gray-900">{referral.bonusAmount} FB</div>
+                                <div className="text-xs text-gray-500">{referral.bonusPaid ? 'Received' : 'Pending'}</div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                  
+                  {/* Mobile Card View for History */}
+                  <div className="lg:hidden space-y-4">
+                    {referrals.filter(ref => ref.referredId === user?.id).map((referral) => (
+                      <div key={referral.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center space-x-3 rtl:space-x-reverse mb-3">
+                          <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <User className="h-5 w-5 text-blue-600" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">{referral.referrerName}</div>
+                            <div className="text-xs text-gray-500">{referral.referrerId}</div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="text-gray-600">Date</p>
+                            <p className="font-medium">{referral.createdAt.toLocaleDateString()}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Code Used</p>
+                            <p className="font-mono text-xs">{referral.referralCode}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-600">Bonus</p>
+                            <p className="font-medium">{referral.bonusAmount} FB</p>
+                            <p className="text-xs text-gray-500">{referral.bonusPaid ? 'Received' : 'Pending'}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           )}
