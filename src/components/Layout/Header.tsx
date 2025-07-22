@@ -107,7 +107,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={`bg-white shadow-sm border-b border-gray-200 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="w-full px-2 sm:px-4 lg:px-6">
+      <div className="w-full px-2 sm:px-4 lg:px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-1 rounded-lg font-bold text-sm md:text-lg">
