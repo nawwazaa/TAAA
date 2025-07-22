@@ -171,7 +171,6 @@ const QRRedemptionSystem: React.FC = () => {
           });
         },
         (error) => {
-          console.error('Location access denied:', error);
         }
       );
     }
