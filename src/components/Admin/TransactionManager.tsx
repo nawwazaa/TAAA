@@ -650,19 +650,19 @@ const TransactionManager: React.FC = () => {
         </div>
 
         {/* Mobile Card View */}
-        <div className="lg:hidden divide-y divide-gray-200">
+        <div className="lg:hidden space-y-3 p-3">
           {filteredTransactions.map((transaction) => (
-            <div key={transaction.id} className="p-4 hover:bg-gray-50">
+            <div key={transaction.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
               {/* Transaction Header */}
               <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <div className="flex items-center space-x-2 rtl:space-x-reverse">
                   {getTypeIcon(transaction.type)}
                   <div>
-                    <div className="text-sm font-medium text-gray-900">{transaction.id}</div>
+                    <div className="text-sm font-medium text-gray-900 truncate max-w-[120px]">{transaction.id}</div>
                     <div className="text-xs text-gray-500 capitalize">{transaction.type}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end space-y-1">
+                <div className="flex flex-col items-end space-y-1 flex-shrink-0">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(transaction.status)}`}>
                     {transaction.status}
                   </span>
@@ -676,15 +676,15 @@ const TransactionManager: React.FC = () => {
 
               {/* Customer Info */}
               <div className="mb-3">
-                <div className="text-sm font-medium text-gray-900 mb-1">{transaction.userName}</div>
-                <div className="text-xs text-gray-500">{transaction.userEmail}</div>
+                <div className="text-sm font-medium text-gray-900 mb-1 truncate">{transaction.userName}</div>
+                <div className="text-xs text-gray-500 truncate">{transaction.userEmail}</div>
                 <div className="text-xs text-gray-500">{transaction.userPhone}</div>
               </div>
 
               {/* Amount and Date */}
               <div className="flex justify-between items-center mb-3">
                 <div>
-                  <div className="text-sm font-medium text-gray-900">
+                  <div className="text-base font-bold text-gray-900">
                     {transaction.amount} {transaction.currency}
                   </div>
                   <div className="text-xs text-gray-500">
@@ -704,30 +704,30 @@ const TransactionManager: React.FC = () => {
 
               {/* Description */}
               <div className="mb-3">
-                <div className="text-sm text-gray-600 line-clamp-2">{transaction.description}</div>
+                <div className="text-sm text-gray-600 line-clamp-2 mb-1">{transaction.description}</div>
                 <div className="text-xs text-gray-500 mt-1">Payment: {transaction.paymentMethod}</div>
                 {transaction.gatewayTransactionId && (
-                  <div className="text-xs text-gray-400 font-mono mt-1">{transaction.gatewayTransactionId}</div>
+                  <div className="text-xs text-gray-400 font-mono mt-1 truncate">{transaction.gatewayTransactionId}</div>
                 )}
               </div>
 
               {/* Support Messages */}
               {transaction.customerSupport?.messages && transaction.customerSupport.messages.length > 0 && (
-                <div className="mb-3">
-                  <div className="text-xs text-gray-500">
+                <div className="mb-3 p-2 bg-blue-50 rounded-lg">
+                  <div className="text-xs text-blue-600 font-medium">
                     💬 {transaction.customerSupport.messages.length} support message(s)
                   </div>
                 </div>
               )}
 
               {/* Action Buttons */}
-              <div className="flex space-x-2 rtl:space-x-reverse">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={() => {
                     setSelectedTransaction(transaction);
                     setShowTransactionDetails(true);
                   }}
-                  className="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+                  className="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center space-x-1 rtl:space-x-reverse"
                 >
                   <Eye className="w-4 h-4" />
                   <span>View Details</span>
