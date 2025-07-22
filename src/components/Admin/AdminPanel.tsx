@@ -83,16 +83,21 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gray-50 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="flex flex-col lg:flex-row">
-        {/* Admin Sidebar */}
-        <div className="w-full lg:w-64 bg-white shadow-lg border-r border-gray-200 lg:min-h-screen overflow-x-hidden">
+    <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
+      {/* Admin Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
+        <h1 className="text-2xl font-bold mb-2 flex items-center">
+          <Shield className="w-6 h-6 mr-2 rtl:mr-0 rtl:ml-2" />
+          Admin Panel
+        </h1>
+        <p className="text-blue-100">Complete System Control</p>
+      </div>
+
+      {/* Admin Navigation */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="border-b border-gray-200">
           <div className="p-3 lg:p-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center">
-              <Shield className="w-5 h-5 lg:w-6 lg:h-6 mr-2 rtl:mr-0 rtl:ml-2 text-blue-600" />
-              Admin Panel
-            </h2>
-            <p className="text-sm text-gray-600 mt-1 hidden lg:block">Complete System Control</p>
+            <h2 className="text-lg font-bold text-gray-900">Admin Functions</h2>
           </div>
           
           <nav className="p-2 lg:p-4 overflow-x-hidden">
@@ -145,9 +150,8 @@ const AdminPanel: React.FC = () => {
             </div>
           </nav>
         </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-3 lg:p-6 min-w-0">
+        
+        <div className="p-6">
           {renderContent()}
         </div>
       </div>
