@@ -23,7 +23,8 @@ import {
   MessageCircle,
   Star,
   TrendingUp,
-  BarChart3
+  BarChart3,
+  Settings
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
