@@ -372,97 +372,101 @@ const ReferralSystem: React.FC = () => {
                 )}
               </div>
 
-              {/* How It Works */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">How It Works</h2>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-purple-600 font-bold">1</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 mb-1">Share Your Referral Code</h3>
-                      <p className="text-gray-600">Share your unique referral code with friends and family through social media, messaging apps, or email.</p>
-                    </div>
+              <>
+                {/* Enter Referral Code */}
+                {!user?.referredBy && (
+                  <div>
+                    {!showReferralInput ? (
+                      <button
+                        onClick={() => setShowReferralInput(true)}
+                        className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-600 hover:border-purple-300 hover:text-purple-600 transition-colors"
+                      >
+                        Have a referral code? Enter it here
+                      </button>
+                    ) : (
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                        <h3 className="font-medium text-gray-900 mb-3">Enter Referral Code</h3>
+                        <div className="flex space-x-2 rtl:space-x-reverse">
+                          <input
+                            type="text"
+                            value={inputReferralCode}
+                            onChange={(e) => setInputReferralCode(e.target.value)}
+                            placeholder="Enter code (e.g., USER-ABC123)"
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          />
+                          <button
+                            onClick={handleSubmitReferralCode}
+                            disabled={referralStatus === 'processing'}
+                            className="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors disabled:opacity-50"
+                          >
+                            {referralStatus === 'processing' ? 'Processing...' : 'Submit'}
+                          </button>
+                        </div>
+                        
+                        {referralStatus === 'error' && (
+                          <p className="mt-2 text-red-600 text-sm">
+                            {errorMessage}
+                          </p>
+                        )}
+                        
+                        {referralStatus === 'success' && (
+                          <div className="mt-2 text-green-600 text-sm flex items-center">
+                            <CheckCircle className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />
+                            <span>Referral code applied successfully! You earned 50 Flixbits.</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-600 font-bold">2</span>
+                )}
+
+                {/* How It Works */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4">How It Works</h2>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-4 rtl:space-x-reverse">
+                      <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-purple-600 font-bold">1</span>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900 mb-1">Share Your Referral Code</h3>
+                        <p className="text-gray-600">Share your unique referral code with friends and family through social media, messaging apps, or email.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 mb-1">Friends Sign Up</h3>
-                      <p className="text-gray-600">When your friends sign up using your referral code, they'll be linked to your account.</p>
+                    
+                    <div className="flex items-start space-x-4 rtl:space-x-reverse">
+                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-blue-600 font-bold">2</span>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900 mb-1">Friends Sign Up</h3>
+                        <p className="text-gray-600">When your friends sign up using your referral code, they'll be linked to your account.</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-green-600 font-bold">3</span>
+                    
+                    <div className="flex items-start space-x-4 rtl:space-x-reverse">
+                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-green-600 font-bold">3</span>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900 mb-1">Both of You Earn Rewards</h3>
+                        <p className="text-gray-600">You'll earn 50 Flixbits for each friend who signs up, and they'll get 50 Flixbits too!</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 mb-1">Both of You Earn Rewards</h3>
-                      <p className="text-gray-600">You'll earn 50 Flixbits for each friend who signs up, and they'll get 50 Flixbits too!</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                    <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-yellow-600 font-bold">4</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 mb-1">Track Your Earnings</h3>
-                      <p className="text-gray-600">Monitor your referrals and earnings in the "My Referrals" tab.</p>
+                    
+                    <div className="flex items-start space-x-4 rtl:space-x-reverse">
+                      <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-yellow-600 font-bold">4</span>
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900 mb-1">Track Your Earnings</h3>
+                        <p className="text-gray-600">Monitor your referrals and earnings in the "My Referrals" tab.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
             </div>
-          )}
-
-          {/* My Referrals Tab */}
-          {activeTab === 'my-referrals' && (
-            <div className="space-y-6">
-              <h2 className="text-xl font-bold text-gray-900">My Referrals</h2>
-              
-              {referrals.filter(ref => ref.referrerId === user?.id).length === 0 ? (
-                <div className="text-center py-12">
-                  <Users className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Referrals Yet</h3>
-                  <p className="text-gray-600 mb-4">Share your referral code to start earning Flixbits!</p>
-                  <button
-                    onClick={handleShareReferral}
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-colors"
-                  >
-                    Share Your Code
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Search and Filter */}
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex-1 relative">
-                      <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search referrals..."
-                        className="w-full pl-10 rtl:pl-3 rtl:pr-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <select className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                      <option value="all">All Status</option>
-                      <option value="pending">Pending</option>
-                      <option value="completed">Completed</option>
-                      <option value="expired">Expired</option>
-                    </select>
-                    
-                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center space-x-2 rtl:space-x-reverse">
-                      <Download className="w-4 h-4" />
-                      <span>Export</span>
-                    </button>
-                  </div>
-
                   {/* Referrals Table */}
                   <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <div className="overflow-x-auto">
