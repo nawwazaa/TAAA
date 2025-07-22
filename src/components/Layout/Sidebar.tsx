@@ -132,7 +132,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 onClick={() => onTabChange(item.id)}
                 className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative ${
                   isCollapsed ? 'justify-center py-4' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
-                  isCollapsed ? 'justify-center' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
                 } ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
