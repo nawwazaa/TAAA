@@ -83,77 +83,45 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
-      {/* Admin Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
-        <h1 className="text-2xl font-bold mb-2 flex items-center">
-          <Shield className="w-6 h-6 mr-2 rtl:mr-0 rtl:ml-2" />
-          Admin Panel
-        </h1>
-        <p className="text-blue-100">Complete System Control</p>
-      </div>
-
-      {/* Admin Navigation */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="border-b border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900">Admin Functions</h2>
+    <div className={`flex ${isRTL ? 'rtl' : 'ltr'}`}>
+      {/* Admin Sidebar */}
+      <div className="w-64 bg-white shadow-lg border-r border-gray-200 min-h-screen">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <Shield className="w-6 h-6 text-blue-600" />
+            <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
           </div>
-          
-          <nav className="p-4">
-            {/* Mobile: Horizontal scroll */}
-            <div className="md:hidden">
-              <div className="flex space-x-2 rtl:space-x-reverse overflow-x-auto pb-2">
-                {adminSections.map((section) => {
-                  const Icon = section.icon;
-                  const isActive = activeSection === section.id;
-                  
-                  return (
-                    <button
-                      key={section.id}
-                      onClick={() => setActiveSection(section.id)}
-                      className={`flex-shrink-0 flex flex-col items-center px-3 py-2 rounded-lg text-center transition-all duration-200 min-w-[80px] ${
-                        isActive
-                          ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                          : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                      }`}
-                    >
-                      <Icon className={`w-4 h-4 mb-1 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                      <span className="text-xs font-medium">{section.label.split(' ')[0]}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-            
-            {/* Desktop: Vertical menu */}
-            <div className="hidden md:block space-y-1">
-              {adminSections.map((section) => {
-                const Icon = section.icon;
-                const isActive = activeSection === section.id;
-                
-                return (
-                  <button
-                    key={section.id}
-                    onClick={() => setActiveSection(section.id)}
-                    className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                    <span className="font-medium text-sm">{section.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </nav>
+          <p className="text-gray-600 text-sm mt-1">Complete System Control</p>
         </div>
         
-        <div className="p-6">
-          {renderContent()}
-        </div>
+        <nav className="p-4">
+          <div className="space-y-1">
+            {adminSections.map((section) => {
+              const Icon = section.icon;
+              const isActive = activeSection === section.id;
+              
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => setActiveSection(section.id)}
+                  className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                  <span className="font-medium text-sm">{section.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        {renderContent()}
       </div>
     </div>
   );
