@@ -20,9 +20,7 @@ import {
   Star,
   Crown,
   Package,
-  Brain,
-  Menu,
-  X
+  Brain
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NotificationSystem from './NotificationSystem';
@@ -417,93 +415,93 @@ const SystemSettings: React.FC = () => {
 const AdminOverview: React.FC<{ setActiveSection: (section: string) => void }> = ({ setActiveSection }) => {
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
-        <h1 className="text-2xl font-bold mb-2">📊 Admin Dashboard</h1>
-        <p className="text-blue-100">Complete system overview and statistics</p>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl lg:rounded-2xl p-4 lg:p-6">
+        <h1 className="text-xl lg:text-2xl font-bold mb-2">📊 Admin Dashboard</h1>
+        <p className="text-blue-100 text-sm lg:text-base">Complete system overview and statistics</p>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900">12,450</p>
+              <p className="text-gray-600 text-xs lg:text-sm">Total Users</p>
+              <p className="text-xl lg:text-3xl font-bold text-gray-900">12,450</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-3 rounded-lg">
-              <Users className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-2 lg:p-3 rounded-lg">
+              <Users className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Total Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">$45,230</p>
+              <p className="text-gray-600 text-xs lg:text-sm">Total Revenue</p>
+              <p className="text-xl lg:text-3xl font-bold text-gray-900">$45,230</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
-              <DollarSign className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-green-500 to-teal-500 p-2 lg:p-3 rounded-lg">
+              <DollarSign className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Active Tournaments</p>
-              <p className="text-3xl font-bold text-gray-900">8</p>
+              <p className="text-gray-600 text-xs lg:text-sm">Active Tournaments</p>
+              <p className="text-xl lg:text-3xl font-bold text-gray-900">8</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
-              <Trophy className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 lg:p-3 rounded-lg">
+              <Trophy className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Sub-Admins</p>
-              <p className="text-3xl font-bold text-gray-900">15</p>
+              <p className="text-gray-600 text-xs lg:text-sm">Sub-Admins</p>
+              <p className="text-xl lg:text-3xl font-bold text-gray-900">15</p>
             </div>
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-3 rounded-lg">
-              <Crown className="w-6 h-6 text-white" />
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 lg:p-3 rounded-lg">
+              <Crown className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
+        <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
           <button 
             onClick={() => setActiveSection('user-search')}
-            className="bg-blue-100 hover:bg-blue-200 text-blue-800 p-4 rounded-lg text-center transition-colors"
+            className="bg-blue-100 hover:bg-blue-200 text-blue-800 p-3 lg:p-4 rounded-lg text-center transition-colors"
           >
-            <Search className="w-8 h-8 mx-auto mb-2" />
-            <span className="font-medium">Search Users</span>
+            <Search className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-2" />
+            <span className="font-medium text-xs lg:text-sm">Search Users</span>
           </button>
           <button 
             onClick={() => setActiveSection('role-management')}
-            className="bg-purple-100 hover:bg-purple-200 text-purple-800 p-4 rounded-lg text-center transition-colors"
+            className="bg-purple-100 hover:bg-purple-200 text-purple-800 p-3 lg:p-4 rounded-lg text-center transition-colors"
           >
-            <Crown className="w-8 h-8 mx-auto mb-2" />
-            <span className="font-medium">Manage Roles</span>
+            <Crown className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-2" />
+            <span className="font-medium text-xs lg:text-sm">Manage Roles</span>
           </button>
           <button 
             onClick={() => setActiveSection('tournaments')}
-            className="bg-green-100 hover:bg-green-200 text-green-800 p-4 rounded-lg text-center transition-colors"
+            className="bg-green-100 hover:bg-green-200 text-green-800 p-3 lg:p-4 rounded-lg text-center transition-colors"
           >
-            <Trophy className="w-8 h-8 mx-auto mb-2" />
-            <span className="font-medium">Tournaments</span>
+            <Trophy className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-2" />
+            <span className="font-medium text-xs lg:text-sm">Tournaments</span>
           </button>
           <button 
             onClick={() => setActiveSection('transactions')}
-            className="bg-orange-100 hover:bg-orange-200 text-orange-800 p-4 rounded-lg text-center transition-colors"
+            className="bg-orange-100 hover:bg-orange-200 text-orange-800 p-3 lg:p-4 rounded-lg text-center transition-colors"
           >
-            <DollarSign className="w-8 h-8 mx-auto mb-2" />
-            <span className="font-medium">Transactions</span>
+            <DollarSign className="w-6 h-6 lg:w-8 lg:h-8 mx-auto mb-2" />
+            <span className="font-medium text-xs lg:text-sm">Transactions</span>
           </button>
         </div>
       </div>
