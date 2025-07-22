@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   Home, 
@@ -14,7 +15,9 @@ import {
   MapPin,
   BarChart3,
   Calendar,
-  Heart
+  Heart,
+  Menu,
+  X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -27,6 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const isRTL = i18n.language === 'ar';
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const getMenuItems = () => {
     const commonItems = [
@@ -75,8 +79,25 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   }
 
   return (
-    <aside className={`w-full md:w-64 bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen`}>
+    <aside className={`w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
+      isCollapsed ? 'md:w-16' : 'md:w-64'
+    }`}>
       <div className="h-full flex flex-col">
+        {/* Desktop Hamburger Toggle */}
+        <div className="hidden md:flex justify-end p-2 border-b border-gray-200">
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+          >
+            {isCollapsed ? (
+              <Menu className="w-5 h-5 text-gray-600" />
+            ) : (
+              <X className="w-5 h-5 text-gray-600" />
+            )}
+          </button>
+        </div>
+        
         <nav className="flex-1 px-2 md:px-4 py-3 md:py-6 space-y-1 md:space-y-2">
           {/* Mobile: Horizontal scroll menu */}
           <div className="md:hidden">
@@ -113,14 +134,26 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
-                className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg text-left rtl:text-right transition-all duration-200 ${
+                className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative ${
+                  isCollapsed ? 'justify-center' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
+                } ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                 }`}
+                title={isCollapsed ? item.label : ''}
               >
                 <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                <span className="font-medium text-sm">{item.label}</span>
+                {!isCollapsed && (
+                  <span className="font-medium text-sm">{item.label}</span>
+                )}
+                
+                {/* Tooltip for collapsed state */}
+                {isCollapsed && (
+                  <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                    {item.label}
+                  </div>
+                )}
               </button>
             );
           })}
