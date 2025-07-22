@@ -462,7 +462,7 @@ const TransactionManager: React.FC = () => {
 
       {/* Filters and Search */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -471,16 +471,16 @@ const TransactionManager: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by transaction ID, user name, email, phone, or description..."
-              className="w-full pl-10 rtl:pl-3 rtl:pr-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 rtl:pl-3 rtl:pr-10 pr-3 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
             />
           </div>
 
           {/* Filter Controls */}
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-4">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               <option value="all">All Status</option>
               <option value="pending">⏳ Pending</option>
@@ -493,7 +493,7 @@ const TransactionManager: React.FC = () => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value as any)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               <option value="all">All Types</option>
               <option value="purchase">🛒 Purchase</option>
@@ -508,7 +508,7 @@ const TransactionManager: React.FC = () => {
             <select
               value={currencyFilter}
               onChange={(e) => setCurrencyFilter(e.target.value as any)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               <option value="all">All Currencies</option>
               <option value="FB">🪙 Flixbits</option>
@@ -522,7 +522,7 @@ const TransactionManager: React.FC = () => {
               type="date"
               value={dateRange.start}
               onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="Start Date"
             />
 
@@ -530,16 +530,16 @@ const TransactionManager: React.FC = () => {
               type="date"
               value={dateRange.end}
               onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-2 md:px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="End Date"
             />
 
             <button
               onClick={exportTransactions}
-              className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+              className="bg-green-600 text-white px-3 md:px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center space-x-1 md:space-x-2 rtl:space-x-reverse text-sm"
             >
               <Download className="w-4 h-4" />
-              <span>Export</span>
+              <span className="hidden sm:inline">Export</span>
             </button>
           </div>
         </div>
