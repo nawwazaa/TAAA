@@ -527,7 +527,8 @@ const ReferralSystem: React.FC = () => {
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-gray-900">Referral Leaderboard</h2>
               
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+              {/* Desktop Table View */}
+              <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -578,6 +579,47 @@ const ReferralSystem: React.FC = () => {
                 </div>
               </div>
 
+              {/* Mobile Card View */}
+              <div className="lg:hidden space-y-4">
+                {leaderboard.map((leader, index) => (
+                  <div key={leader.id} className={`bg-white border border-gray-200 rounded-lg p-4 ${leader.id === user?.id ? 'bg-purple-50 border-purple-200' : ''}`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                          index === 0 ? 'bg-yellow-100 text-yellow-800' :
+                          index === 1 ? 'bg-gray-200 text-gray-800' :
+                          index === 2 ? 'bg-orange-100 text-orange-800' :
+                          'bg-purple-100 text-purple-800'
+                        }`}>
+                          <span className="font-bold">{index + 1}</span>
+                        </div>
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                          <div className="h-8 w-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">{leader.name.charAt(0)}</span>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">{leader.name}</div>
+                            <div className="text-xs text-gray-500">{leader.id === user?.id ? 'You' : 'User'}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-gray-600">Referrals</p>
+                        <p className="text-lg font-bold text-gray-900">{leader.referrals}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Total Earned</p>
+                        <p className="text-lg font-bold text-gray-900">{leader.totalBonus} FB</p>
+                        <p className="text-xs text-gray-500">${(leader.totalBonus * 0.1).toFixed(2)} USD</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               {/* Prizes Section */}
               <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6">
                 <h3 className="text-lg font-bold text-purple-900 mb-4">Monthly Referral Prizes</h3>
@@ -625,7 +667,7 @@ const ReferralSystem: React.FC = () => {
                   <p className="text-gray-600 mb-4">You haven't been referred by anyone yet.</p>
                 </div>
               ) : (
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
@@ -665,6 +707,39 @@ const ReferralSystem: React.FC = () => {
                       </tbody>
                     </table>
                   </div>
+                </div>
+                
+                {/* Mobile Card View for History */}
+                <div className="lg:hidden space-y-4">
+                  {referrals.filter(ref => ref.referredId === user?.id).map((referral) => (
+                    <div key={referral.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-3 rtl:space-x-reverse mb-3">
+                        <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                          <User className="h-5 w-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">{referral.referrerName}</div>
+                          <div className="text-xs text-gray-500">{referral.referrerId}</div>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="text-gray-600">Date</p>
+                          <p className="font-medium">{referral.createdAt.toLocaleDateString()}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">Code Used</p>
+                          <p className="font-mono text-xs">{referral.referralCode}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">Bonus</p>
+                          <p className="font-medium">{referral.bonusAmount} FB</p>
+                          <p className="text-xs text-gray-500">{referral.bonusPaid ? 'Received' : 'Pending'}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

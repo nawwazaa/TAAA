@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   }
 
   return (
-    <aside className={`w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
+    <aside className={`flex-shrink-0 w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
       isCollapsed ? 'md:w-16' : 'md:w-64'
     }`}>
       <div className="h-full flex flex-col">

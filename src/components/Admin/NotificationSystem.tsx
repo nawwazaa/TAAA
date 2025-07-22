@@ -525,7 +525,8 @@ const NotificationSystem: React.FC = () => {
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-gray-900">Active Subscriptions</h2>
               
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+              {/* Desktop Table View */}
+              <div className="hidden lg:block bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -579,6 +580,53 @@ const NotificationSystem: React.FC = () => {
                     </tbody>
                   </table>
                 </div>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="lg:hidden space-y-4">
+                {subscriptions.map((sub) => (
+                  <div key={sub.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{sub.userName}</div>
+                        <div className="text-xs text-gray-500">{sub.userId}</div>
+                      </div>
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(sub.status)}`}>
+                        {sub.status}
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-xs text-gray-600">Package</p>
+                        <p className="text-sm font-medium text-gray-900">{sub.packageName}</p>
+                        <p className="text-xs text-gray-500">{sub.paymentMethod === 'flixbits' ? 'Flixbits' : 'USD'}</p>
+                      </div>
+                      
+                      <div>
+                        <p className="text-xs text-gray-600">Usage</p>
+                        <p className="text-sm text-gray-900">{sub.notificationsUsed} / {sub.notificationsLimit}</p>
+                        <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+                          <div 
+                            className="bg-blue-600 h-2 rounded-full" 
+                            style={{ width: `${(sub.notificationsUsed / sub.notificationsLimit) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-xs text-gray-600">Expires</p>
+                          <p className="text-sm text-gray-900">{sub.endDate.toLocaleDateString()}</p>
+                        </div>
+                        <div className="flex space-x-2 rtl:space-x-reverse">
+                          <button className="text-blue-600 hover:text-blue-900 text-sm">View</button>
+                          <button className="text-red-600 hover:text-red-900 text-sm">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
