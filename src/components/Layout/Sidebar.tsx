@@ -131,7 +131,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
                 className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative ${
-                  isCollapsed ? 'justify-center py-4' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
+                  isCollapsed ? 'justify-center' : 'space-x-3 rtl:space-x-reverse text-left rtl:text-right'
                 } ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
@@ -139,7 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 }`}
                 title={isCollapsed ? item.label : ''}
               >
-                <Icon className={`${isCollapsed ? 'w-10 h-10' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                <Icon className={`${isCollapsed ? 'w-20 h-20' : 'w-5 h-5'} ${isActive ? 'text-white' : 'text-gray-500'}`} />
                 {!isCollapsed && (
                   <span className="font-medium text-sm">{item.label}</span>
                 )}
