@@ -20,7 +20,9 @@ import {
   Star,
   Crown,
   Package,
-  Brain
+  Brain,
+  X,
+  Menu
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NotificationSystem from './NotificationSystem';
