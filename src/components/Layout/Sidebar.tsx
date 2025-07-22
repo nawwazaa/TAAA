@@ -90,11 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
-            {!isCollapsed ? (
-              <Menu className="w-5 h-5 text-gray-600" />
-            ) : (
-              <X className="w-5 h-5 text-gray-600" />
-            )}
+            <Menu className="w-5 h-5 text-gray-600" />
           </button>
         </div>
         
