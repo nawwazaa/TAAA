@@ -132,9 +132,14 @@ const VoiceInterface: React.FC = () => {
           speak(response.text);
         }
         
-        // Execute actions
+        // Don't auto-execute open_map actions to avoid popup blockers
+        // User must click the button in the UI instead
         if (response.actions) {
-          response.actions.forEach(action => executeAction(action));
+          response.actions.forEach(action => {
+            if (action.type !== 'open_map') {
+              executeAction(action);
+            }
+          });
         }
       }
     };
