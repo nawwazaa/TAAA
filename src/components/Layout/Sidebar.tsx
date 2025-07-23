@@ -18,6 +18,7 @@ import {
   Heart,
   Menu,
   X,
+  Wallet,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
