@@ -211,34 +211,32 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
   const handleNavigationCommand = async (command: VoiceCommand): Promise<VoiceResponse> => {
     const { destination, type } = command.parameters;
     
-    if (!userLocation) {
-      return generateResponse('I need your location to provide navigation. Please enable location services.');
+    console.log('🧭 Navigation command - destination:', destination);
+    
+    if (!destination) {
+      return generateResponse('Where would you like me to take you?');
     }
     
-    // Find the destination
-    const places = await findNearbyPlaces(userLocation, type || 'any', 5000);
-    const targetPlace = places.find(place => 
-      place.name.toLowerCase().includes(destination.toLowerCase())
-    );
-    
-    if (!targetPlace) {
-      return generateResponse(`I couldn't find "${destination}" nearby. Would you like me to search for something similar?`);
-    }
-    
+    // For specific destinations like "airport", "mall", etc., open Google Maps directly
     const actions: VoiceAction[] = [{
       type: 'open_map',
       data: {
-        lat: targetPlace.coordinates.lat,
-        lng: targetPlace.coordinates.lng,
-        name: targetPlace.name,
-        address: targetPlace.address
+        destination: destination,
+        searchQuery: destination,
+        userLocation: userLocation
       },
-      label: `Navigate to ${targetPlace.name}`
+      label: `Get directions to ${destination}`
     }];
+    
+    // Auto-execute the map opening
+    setTimeout(() => {
+      console.log('🗺️ Auto-opening Google Maps for:', destination);
+      openGoogleMapsSearch(destination, userLocation);
+    }, 1000);
     
     return {
       id: `resp_${Date.now()}`,
-      text: `I found ${targetPlace.name} at ${targetPlace.address}. It's about ${Math.round(targetPlace.distance)}m away. Would you like me to open directions?`,
+      text: `Opening Google Maps with directions to ${destination}. Please wait a moment.`,
       actions,
       timestamp: new Date()
     };

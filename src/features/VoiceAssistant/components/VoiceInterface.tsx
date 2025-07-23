@@ -18,7 +18,7 @@ import { useVoiceRecognition } from '../hooks/useVoiceRecognition';
 import { useVoiceCommands } from '../hooks/useVoiceCommands';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import { VoiceSettings, VoiceAction } from '../types';
-import { openGoogleMaps, getCurrentLocation } from '../utils/locationServices';
+import { openGoogleMaps, openGoogleMapsSearch, getCurrentLocation } from '../utils/locationServices';
 
 const VoiceInterface: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -102,7 +102,11 @@ const VoiceInterface: React.FC = () => {
   const executeAction = (action: VoiceAction) => {
     switch (action.type) {
       case 'open_map':
-        openGoogleMaps(action.data);
+        if (action.data.searchQuery) {
+          openGoogleMapsSearch(action.data.searchQuery, action.data.userLocation);
+        } else {
+          openGoogleMaps(action.data);
+        }
         break;
       case 'navigate':
         if (action.data.page) {

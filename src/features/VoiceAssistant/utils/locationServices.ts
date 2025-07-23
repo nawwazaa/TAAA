@@ -185,6 +185,25 @@ export const openGoogleMaps = (location: { lat: number; lng: number; name?: stri
   window.open(mapsUrl, '_blank');
 };
 
+export const openGoogleMapsSearch = (searchQuery: string, userLocation?: { lat: number; lng: number }) => {
+  console.log('🗺️ Opening Google Maps search for:', searchQuery);
+  
+  let mapsUrl = '';
+  
+  if (userLocation) {
+    // Search with user's location as starting point
+    mapsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${encodeURIComponent(searchQuery)}`;
+  } else {
+    // Simple search
+    mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(searchQuery)}`;
+  }
+  
+  console.log('🔗 Opening URL:', mapsUrl);
+  
+  // Open in new tab
+  window.open(mapsUrl, '_blank');
+};
+
 export const calculateDistance = (
   lat1: number,
   lng1: number,

@@ -98,11 +98,38 @@ const extractSearchParameters = (text: string): Record<string, any> => {
 const extractNavigationParameters = (text: string): Record<string, any> => {
   const params: Record<string, any> = {};
   
-  // Extract destination
-  const words = text.split(' ');
-  const toIndex = words.findIndex(word => word === 'to');
-  if (toIndex !== -1 && toIndex < words.length - 1) {
-    params.destination = words.slice(toIndex + 1).join(' ');
+  // Extract destination - handle various patterns
+  let destination = '';
+  
+  // Pattern 1: "take me to [destination]"
+  if (text.includes('take me to ')) {
+    destination = text.split('take me to ')[1]?.trim() || '';
+  }
+  // Pattern 2: "go to [destination]"
+  else if (text.includes('go to ')) {
+    destination = text.split('go to ')[1]?.trim() || '';
+  }
+  // Pattern 3: "navigate to [destination]"
+  else if (text.includes('navigate to ')) {
+    destination = text.split('navigate to ')[1]?.trim() || '';
+  }
+  // Pattern 4: "directions to [destination]"
+  else if (text.includes('directions to ')) {
+    destination = text.split('directions to ')[1]?.trim() || '';
+  }
+  // Pattern 5: "where is [destination]" or "find [destination]"
+  else if (text.includes('where is ')) {
+    destination = text.split('where is ')[1]?.trim() || '';
+  }
+  else if (text.includes('find ') && (text.includes('airport') || text.includes('mall') || text.includes('hospital'))) {
+    destination = text.split('find ')[1]?.trim() || '';
+  }
+  
+  // Clean up common words
+  destination = destination.replace(/^(the|a|an)\s+/i, '');
+  
+  if (destination) {
+    params.destination = destination;
   }
   
   // Extract transportation mode
