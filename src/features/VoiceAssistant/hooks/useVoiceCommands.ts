@@ -78,21 +78,25 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
   }, [userLocation]);
 
   const handleSearchCommand = async (command: VoiceCommand): Promise<VoiceResponse> => {
-    const { category, location, type } = command.parameters;
+    const { category, location, type, hasOffers } = command.parameters;
     
-    if (category === 'restaurants' || category === 'food') {
+    // Handle stores/shops
+    if (category === 'stores' || command.command.toLowerCase().includes('store') || command.command.toLowerCase().includes('shop')) {
       if (!userLocation) {
-        return generateResponse('I need your location to find nearby restaurants. Please enable location services.');
+        return generateResponse('I need your location to find nearby stores. Please enable location services.');
       }
       
-      const places = await findNearbyPlaces(userLocation, 'restaurant', 2000); // 2km radius
+      const places = await findNearbyPlaces(userLocation, 'store', 2000); // 2km radius
       const placesWithOffers = places.filter(place => place.offers && place.offers.length > 0);
       
-      if (placesWithOffers.length === 0) {
-        return generateResponse('I couldn\'t find any restaurants with offers nearby. Would you like me to show all restaurants instead?');
+      if (places.length === 0) {
+        return generateResponse('I couldn\'t find any stores in your area. Try expanding your search radius or check your location settings.');
       }
       
-      const actions: VoiceAction[] = placesWithOffers.slice(0, 3).map(place => ({
+      // Prioritize places with offers, but show all if no offers
+      const displayPlaces = placesWithOffers.length > 0 ? placesWithOffers : places;
+      
+      const actions: VoiceAction[] = displayPlaces.slice(0, 3).map(place => ({
         type: 'open_map',
         data: { 
           lat: place.coordinates.lat, 
@@ -103,9 +107,66 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
         label: `Navigate to ${place.name}`
       }));
       
+      let responseText = '';
+      if (placesWithOffers.length > 0) {
+        const closest = placesWithOffers[0];
+        responseText = `I found ${placesWithOffers.length} stores with offers nearby. The closest is ${closest.name} with ${closest.offers![0].discount}% off, about ${Math.round(closest.distance)} meters away.`;
+      } else {
+        const closest = places[0];
+        responseText = `I found ${places.length} stores nearby. The closest is ${closest.name}, about ${Math.round(closest.distance)} meters away. No current offers available.`;
+      }
+      
       return {
         id: `resp_${Date.now()}`,
-        text: `I found ${placesWithOffers.length} restaurants with offers nearby. The closest is ${placesWithOffers[0].name} with ${placesWithOffers[0].offers![0].discount}% off, about ${Math.round(placesWithOffers[0].distance)}m away.`,
+        text: responseText,
+        actions,
+        followUpQuestions: [
+          'Show me more details',
+          'Get directions',
+          'What are the opening hours?'
+        ],
+        timestamp: new Date()
+      };
+    }
+    
+    // Handle restaurants/food
+    if (category === 'restaurants' || category === 'food' || command.command.toLowerCase().includes('restaurant') || command.command.toLowerCase().includes('food')) {
+      if (!userLocation) {
+        return generateResponse('I need your location to find nearby restaurants. Please enable location services.');
+      }
+      
+      const places = await findNearbyPlaces(userLocation, 'restaurant', 2000);
+      const placesWithOffers = places.filter(place => place.offers && place.offers.length > 0);
+      
+      if (places.length === 0) {
+        return generateResponse('I couldn\'t find any restaurants in your area. Try expanding your search radius.');
+      }
+      
+      const displayPlaces = placesWithOffers.length > 0 ? placesWithOffers : places;
+      
+      const actions: VoiceAction[] = displayPlaces.slice(0, 3).map(place => ({
+        type: 'open_map',
+        data: { 
+          lat: place.coordinates.lat, 
+          lng: place.coordinates.lng,
+          name: place.name,
+          address: place.address
+        },
+        label: `Navigate to ${place.name}`
+      }));
+      
+      let responseText = '';
+      if (placesWithOffers.length > 0) {
+        const closest = placesWithOffers[0];
+        responseText = `I found ${placesWithOffers.length} restaurants with offers nearby. The closest is ${closest.name} with ${closest.offers![0].discount}% off, about ${Math.round(closest.distance)} meters away.`;
+      } else {
+        const closest = places[0];
+        responseText = `I found ${places.length} restaurants nearby. The closest is ${closest.name}, about ${Math.round(closest.distance)} meters away.`;
+      }
+      
+      return {
+        id: `resp_${Date.now()}`,
+        text: responseText,
         actions,
         followUpQuestions: [
           'Show me the menu',
@@ -116,7 +177,35 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
       };
     }
     
-    return generateResponse(`Searching for ${category || 'items'} in your area...`);
+    // Generic search
+    if (!userLocation) {
+      return generateResponse('I need your location to search for nearby places. Please enable location services.');
+    }
+    
+    const places = await findNearbyPlaces(userLocation, 'any', 2000);
+    
+    if (places.length === 0) {
+      return generateResponse('I couldn\'t find any places matching your search in your area.');
+    }
+    
+    const closest = places[0];
+    const actions: VoiceAction[] = [{
+      type: 'open_map',
+      data: { 
+        lat: closest.coordinates.lat, 
+        lng: closest.coordinates.lng,
+        name: closest.name,
+        address: closest.address
+      },
+      label: `Navigate to ${closest.name}`
+    }];
+    
+    return {
+      id: `resp_${Date.now()}`,
+      text: `I found ${places.length} places nearby. The closest is ${closest.name}, about ${Math.round(closest.distance)} meters away.`,
+      actions,
+      timestamp: new Date()
+    };
   };
 
   const handleNavigationCommand = async (command: VoiceCommand): Promise<VoiceResponse> => {

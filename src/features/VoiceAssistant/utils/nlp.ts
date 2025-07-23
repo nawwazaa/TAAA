@@ -70,14 +70,20 @@ const extractSearchParameters = (text: string): Record<string, any> => {
     params.category = 'restaurants';
   } else if (text.includes('store') || text.includes('shop') || text.includes('buy')) {
     params.category = 'stores';
+  } else if (text.includes('mall') || text.includes('shopping')) {
+    params.category = 'stores';
   } else if (text.includes('gas') || text.includes('fuel')) {
     params.category = 'gas_stations';
   } else if (text.includes('hospital') || text.includes('clinic')) {
     params.category = 'healthcare';
+  } else if (text.includes('pharmacy') || text.includes('medicine')) {
+    params.category = 'pharmacy';
   }
   
   // Extract location modifiers
   if (text.includes('nearby') || text.includes('near me') || text.includes('close')) {
+    params.location = 'nearby';
+  } else if (text.includes('in my area') || text.includes('around here')) {
     params.location = 'nearby';
   }
   

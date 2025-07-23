@@ -73,6 +73,42 @@ export const findNearbyPlaces = async (
       }
     },
     {
+      id: 'place_005',
+      name: 'City Center Shopping Mall',
+      type: 'store',
+      address: 'Deira City Centre, Dubai',
+      coordinates: {
+        lat: userLocation.lat + 0.003,
+        lng: userLocation.lng - 0.001
+      },
+      distance: 280,
+      rating: 4.5,
+      priceRange: '$$',
+      offers: [
+        {
+          id: 'offer_005',
+          title: 'Weekend Shopping Sale',
+          discount: 20,
+          validUntil: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+        }
+      ],
+      phone: '+971-4-295-1010'
+    },
+    {
+      id: 'place_006',
+      name: 'Fashion District Store',
+      type: 'store',
+      address: 'Business Bay, Dubai',
+      coordinates: {
+        lat: userLocation.lat - 0.001,
+        lng: userLocation.lng + 0.002
+      },
+      distance: 190,
+      rating: 4.7,
+      priceRange: '$$$',
+      phone: '+971-4-567-8901'
+    },
+    {
       id: 'place_003',
       name: 'Luxury Spa & Wellness',
       type: 'service',
@@ -131,7 +167,8 @@ export const findNearbyPlaces = async (
   // Filter by type and distance
   return samplePlaces
     .filter(place => {
-      if (type !== 'any' && place.type !== type) return false;
+      if (type !== 'any' && type !== 'store' && place.type !== type) return false;
+      if (type === 'store' && place.type !== 'store') return false;
       return place.distance <= radius;
     })
     .sort((a, b) => a.distance - b.distance);
