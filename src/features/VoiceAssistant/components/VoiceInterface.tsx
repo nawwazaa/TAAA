@@ -192,17 +192,19 @@ const VoiceInterface: React.FC = () => {
             <button
               onClick={() => speak('Hello! This is FlixAssistant. I can help you find nearby restaurants, read notifications, and control the app with voice commands.')}
               disabled={isSpeaking}
-              className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50"
+              className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50 flex items-center space-x-2 rtl:space-x-reverse"
             >
-              Test Voice
+              <Volume2 className="w-5 h-5" />
+              <span>Test Voice</span>
             </button>
             
             {isSpeaking && (
               <button
                 onClick={handleStopSpeaking}
-                className="px-6 py-3 bg-gray-500 text-white rounded-lg font-medium hover:bg-gray-600 transition-colors"
+                className="px-6 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors flex items-center space-x-2 rtl:space-x-reverse"
               >
-                Stop Speaking
+                <VolumeX className="w-5 h-5" />
+                <span>Stop Speaking</span>
               </button>
             )}
           </div>

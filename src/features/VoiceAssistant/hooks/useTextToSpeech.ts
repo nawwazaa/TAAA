@@ -19,62 +19,74 @@ export const useTextToSpeech = (settings: VoiceSettings) => {
     try {
       // Cancel any ongoing speech
       window.speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(text);
       
-      // Configure voice settings
-      utterance.rate = settings.speed;
-      utterance.volume = settings.volume;
-      utterance.lang = settings.language === 'ar' ? 'ar-SA' : 'en-US';
-      
-      // Wait for voices to load and then set preferred voice
-      const setVoice = () => {
+      // Wait a moment for cancellation to complete
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        // Configure voice settings
+        utterance.rate = settings.speed;
+        utterance.volume = settings.volume;
+        utterance.lang = settings.language === 'ar' ? 'ar-SA' : 'en-US';
+        
+        // Get available voices
         const voices = window.speechSynthesis.getVoices();
+        
         if (voices.length > 0) {
-          const preferredVoice = voices.find(voice => {
-            const isCorrectLang = voice.lang.startsWith(settings.language);
-            const isCorrectGender = settings.voiceType === 'female' 
-              ? voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('woman')
-              : voice.name.toLowerCase().includes('male') || voice.name.toLowerCase().includes('man');
-            return isCorrectLang && (isCorrectGender || voices.length < 5);
+          // Find a suitable voice
+          let selectedVoice = voices.find(voice => {
+            const isCorrectLang = voice.lang.startsWith(settings.language === 'ar' ? 'ar' : 'en');
+            return isCorrectLang;
           });
           
-          if (preferredVoice) {
-            utterance.voice = preferredVoice;
+          // Fallback to any English voice if no match found
+          if (!selectedVoice && settings.language === 'en') {
+            selectedVoice = voices.find(voice => voice.lang.startsWith('en'));
+          }
+          
+          // Use default voice if still no match
+          if (!selectedVoice) {
+            selectedVoice = voices[0];
+          }
+          
+          if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            console.log('Using voice:', selectedVoice.name, selectedVoice.lang);
           }
         }
-      };
-      
-      // Set voice immediately if available, or wait for voices to load
-      if (window.speechSynthesis.getVoices().length > 0) {
-        setVoice();
-      } else {
-        window.speechSynthesis.onvoiceschanged = setVoice;
-      }
 
-      utterance.onstart = () => {
-        setIsSpeaking(true);
-        setError(null);
-        console.log('Speech started:', text);
-      };
+        utterance.onstart = () => {
+          setIsSpeaking(true);
+          setError(null);
+          console.log('Speech started:', text);
+        };
 
-      utterance.onend = () => {
-        setIsSpeaking(false);
-        console.log('Speech ended');
-      };
+        utterance.onend = () => {
+          setIsSpeaking(false);
+          console.log('Speech ended');
+        };
 
-      utterance.onerror = (event) => {
-        setError(event.error);
-        setIsSpeaking(false);
-        console.error('Speech error:', event.error);
-      };
+        utterance.onerror = (event) => {
+          console.error('Speech error:', event.error);
+          setError(event.error);
+          setIsSpeaking(false);
+        };
 
-      utteranceRef.current = utterance;
-      
-      // Add a small delay to ensure proper initialization
-      setTimeout(() => {
+        utterance.onpause = () => {
+          console.log('Speech paused');
+        };
+
+        utterance.onresume = () => {
+          console.log('Speech resumed');
+        };
+
+        utteranceRef.current = utterance;
+        
+        // Speak the text
+        console.log('Speaking text:', text);
+        console.log('Voice settings:', { rate: utterance.rate, volume: utterance.volume, lang: utterance.lang });
         window.speechSynthesis.speak(utterance);
-      }, 100);
+      }, 200);
 
     } catch (error) {
       setError('Failed to speak text');
