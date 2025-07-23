@@ -244,69 +244,34 @@ const VoiceInterface: React.FC = () => {
     return (
       <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
         <div className="bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-2xl p-6">
-          <h1 className="text-2xl font-bold mb-2">🎤 Voice Assistant</h1>
-          <p className="text-red-100">Voice recognition is not supported in your browser</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-6">
-        <h1 className="text-2xl font-bold mb-2">🎤 FlixAssistant</h1>
-        <p className="text-purple-100">Your personal AI assistant for FlixMarket</p>
-      </div>
-
-      {/* Voice Control Panel */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="text-center">
-          <div className="mb-6">
-            <div className={`w-32 h-32 rounded-full mx-auto flex items-center justify-center transition-all duration-300 ${
-              isListening || isWakeWordListening
-                ? 'bg-gradient-to-r from-red-500 to-pink-500 animate-pulse' 
-                : isSpeaking
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse'
-                : 'bg-gradient-to-r from-gray-400 to-gray-500'
-            }`}>
-              {isListening || isWakeWordListening ? (
-                <Mic className="w-16 h-16 text-white" />
-              ) : isSpeaking ? (
-                <Volume2 className="w-16 h-16 text-white" />
-              ) : (
-                <MicOff className="w-16 h-16 text-white" />
-              )}
-            </div>
-            
-            <div className="mt-4">
-              {isWakeWordListening && !isManualListening && (
-                <div className="text-blue-600 font-bold text-lg">👂 Listening for "Hey Flix"...</div>
-              )}
-              {isManualListening && (
-                <div className="text-red-600 font-bold text-lg">🎤 Listening for command...</div>
-              )}
-              {isSpeaking && (
-                <div className="text-blue-600 font-bold text-lg">🔊 Speaking...</div>
-              )}
-              {isProcessing && (
-                <div className="text-purple-600 font-bold text-lg">🧠 Processing...</div>
-              )}
-              {!isListening && !isSpeaking && !isProcessing && !isWakeWordListening && (
-                <div className="text-gray-600 text-lg">Say "Hey Flix" or tap to start</div>
-              )}
-            </div>
-          </div>
-          
-          <div className="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
-            <button
-              onClick={handleManualListening}
-              disabled={isProcessing || isWakeWordListening}
+               // Use the most reliable Google Maps URL format to avoid KML/KMZ errors
+               let mapsUrl = '';
+               
+               if (userLocation) {
+                 // Create directions URL - this is the most reliable format
+                 mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+               } else {
+                 // Create search URL using the Maps API format
+                 mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination)}`;
+               }
+               
+               console.log('🔗 Using Google Maps API URL:', mapsUrl);
+               
+               // Open Google Maps
+               const newWindow = window.open(mapsUrl, '_blank');
+               
+               if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                 console.log('⚠️ Popup blocked, opening in same window...');
+                 window.location.href = mapsUrl;
+               } else {
+                 console.log('✅ Successfully opened Google Maps in new tab');
+               }
               className={`px-6 py-3 rounded-lg font-medium transition-colors ${
                 isManualListening
                   ? 'bg-red-500 text-white hover:bg-red-600'
                   : 'bg-blue-500 text-white hover:bg-blue-600'
-              } disabled:opacity-50`}
-            >
+               const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+             alert(`Unable to open Google Maps: ${error.message}. Please try manually searching for the destination.`);
               {isManualListening ? 'Stop Manual Mode' : 'Manual Listen'}
             </button>
             
