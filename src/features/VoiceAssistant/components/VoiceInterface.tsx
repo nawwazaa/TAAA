@@ -152,41 +152,60 @@ const VoiceInterface: React.FC = () => {
       case 'open_map':
         console.log('🗺️ Executing map action:', action.data);
         
-        // Handle different types of map data
-        if (action.data.destination || action.data.searchQuery) {
-          const destination = action.data.destination || action.data.searchQuery;
-          console.log('🎯 Destination:', destination);
-          
-          let mapsUrl = '';
-          
-          if (userLocation) {
-            // Create directions URL from user location to destination
-            mapsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${encodeURIComponent(destination)}`;
-            console.log('🧭 Creating directions URL with user location');
+        try {
+          // Handle different types of map data
+          if (action.data.destination || action.data.searchQuery) {
+            const destination = action.data.destination || action.data.searchQuery;
+            console.log('🎯 Destination:', destination);
+            
+            // Use Google Maps app URL scheme that works better
+            let mapsUrl = '';
+            
+            if (userLocation) {
+              // Create directions URL using the maps app URL scheme
+              mapsUrl = `https://maps.google.com/maps?saddr=${userLocation.lat},${userLocation.lng}&daddr=${encodeURIComponent(destination)}&dirflg=d`;
+              console.log('🧭 Creating directions URL with user location');
+            } else {
+              // Create search URL using maps app URL scheme
+              mapsUrl = `https://maps.google.com/maps?q=${encodeURIComponent(destination)}`;
+              console.log('🔍 Creating search URL without user location');
+            }
+            
+            console.log('🔗 Final Maps URL:', mapsUrl);
+            
+            // Try to open in new window first, fallback to same window
+            console.log('🚀 Attempting to open Google Maps...');
+            const newWindow = window.open(mapsUrl, '_blank');
+            
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+              console.log('⚠️ Popup blocked, trying same window...');
+              window.location.href = mapsUrl;
+            } else {
+              console.log('✅ Successfully opened Google Maps in new tab');
+            }
+            
+          } else if (action.data.lat && action.data.lng) {
+            // Handle coordinate-based navigation
+            const { lat, lng, name, address } = action.data;
+            const mapsUrl = `https://maps.google.com/maps?q=${lat},${lng}`;
+            console.log('📍 Opening coordinates:', lat, lng);
+            console.log('🔗 Coordinates URL:', mapsUrl);
+            
+            // Try to open in new window first, fallback to same window
+            const newWindow = window.open(mapsUrl, '_blank');
+            
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+              console.log('⚠️ Popup blocked, trying same window...');
+              window.location.href = mapsUrl;
+            } else {
+              console.log('✅ Successfully opened Google Maps in new tab');
+            }
           } else {
-            // Create search URL for destination
-            mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(destination)}`;
-            console.log('🔍 Creating search URL without user location');
+            console.error('❌ No valid map data provided:', action.data);
           }
-          
-          console.log('🔗 Final Maps URL:', mapsUrl);
-          
-          // Use window.location to navigate directly (no popup blocker)
-          console.log('🚀 Opening Google Maps directly...');
-          window.location.href = mapsUrl;
-          
-        } else if (action.data.lat && action.data.lng) {
-          // Handle coordinate-based navigation
-          const { lat, lng, name, address } = action.data;
-          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-          console.log('📍 Opening coordinates:', lat, lng);
-          console.log('🔗 Coordinates URL:', mapsUrl);
-          
-          // Use window.location to navigate directly
-          console.log('🚀 Opening Google Maps with coordinates...');
-          window.location.href = mapsUrl;
-        } else {
-          console.error('❌ No valid map data provided:', action.data);
+        } catch (error) {
+          console.error('❌ Failed to open Google Maps:', error);
+          alert('Unable to open Google Maps. Please check your internet connection.');
         }
         break;
         
