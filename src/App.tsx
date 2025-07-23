@@ -18,7 +18,6 @@ import EventsManager from './components/Events/EventsManager';
 import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
-import VideoContest from './components/VideoContest/VideoContest';
 import { DrawWinnersSystem } from './features/DrawWinners';
 import { WalletManagementSystem } from './features/WalletManagement';
 import { QrCode, Video, Wallet, Plus, Minus, Gift } from 'lucide-react';
