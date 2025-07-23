@@ -42,6 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       { id: 'rewards', label: t('rewards'), icon: Gift },
       { id: 'qr-code', label: t('qrCode'), icon: QrCode },
       { id: 'qr-redemption', label: 'QR Redemption', icon: Scan },
+      { id: 'video-contest', label: 'Video Contest', icon: Video },
       { id: 'events', label: 'Events', icon: Calendar },
       { id: 'wishlist', label: 'Service Requests', icon: Heart },
       { id: 'draw-winners', label: 'Prize Draws', icon: Gift },
