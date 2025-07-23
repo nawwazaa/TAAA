@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import React from 'react';
 import { VoiceSettings } from '../types';
 
 export const useTextToSpeech = (settings: VoiceSettings) => {
