@@ -18,7 +18,6 @@ import {
   Heart,
   Menu,
   X,
-  Trophy
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
