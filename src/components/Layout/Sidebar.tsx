@@ -19,6 +19,7 @@ import {
   Menu,
   X,
   Wallet,
+  Mic,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -46,6 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       { id: 'events', label: 'Events', icon: Calendar },
       { id: 'wishlist', label: 'Service Requests', icon: Heart },
       { id: 'draw-winners', label: 'Prize Draws', icon: Gift },
+      { id: 'voice-assistant', label: 'Voice Assistant', icon: Mic },
     ];
 
     if (user?.userType === 'seller') {

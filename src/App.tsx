@@ -20,6 +20,7 @@ import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
 import { DrawWinnersSystem } from './features/DrawWinners';
 import { WalletManagementSystem } from './features/WalletManagement';
+import { VoiceAssistantSystem } from './features/VoiceAssistant';
 import { QrCode, Video, Wallet, Plus, Minus, Gift } from 'lucide-react';
 import './i18n';
 
@@ -129,6 +130,10 @@ const AppContent: React.FC = () => {
       case 'wallet':
         return (
           <WalletManagementSystem />
+        );
+      case 'voice-assistant':
+        return (
+          <VoiceAssistantSystem />
         );
       case 'video-contest':
         return <VideoContest />;
