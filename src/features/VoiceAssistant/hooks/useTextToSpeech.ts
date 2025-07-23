@@ -117,10 +117,15 @@ export const useTextToSpeech = (settings: VoiceSettings) => {
       };
 
       utterance.onerror = (event) => {
-        console.error('❌ Speech error:', event.error);
-        console.error('Error details:', event);
-        setError(`Speech error: ${event.error}`);
-        setIsSpeaking(false);
+        if (event.error === 'interrupted') {
+          console.warn('⚠️ Speech interrupted (expected behavior):', event.error);
+          setIsSpeaking(false);
+        } else {
+          console.error('❌ Speech error:', event.error);
+          console.error('Error details:', event);
+          setError(`Speech error: ${event.error}`);
+          setIsSpeaking(false);
+        }
       };
 
       utterance.onpause = () => {
