@@ -74,6 +74,7 @@ const VoiceInterface: React.FC = () => {
         const response = await processCommand(command, confidence);
         
         if (response.text) {
+          console.log('Speaking response:', response.text);
           speak(response.text);
         }
         
@@ -186,6 +187,14 @@ const VoiceInterface: React.FC = () => {
               } disabled:opacity-50`}
             >
               {isListening ? 'Stop Listening' : 'Start Listening'}
+            </button>
+            
+            <button
+              onClick={() => speak('Hello! This is FlixAssistant. I can help you find nearby restaurants, read notifications, and control the app with voice commands.')}
+              disabled={isSpeaking}
+              className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50"
+            >
+              Test Voice
             </button>
             
             {isSpeaking && (
