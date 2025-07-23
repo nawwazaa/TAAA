@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       { id: 'qr-redemption', label: 'QR Redemption', icon: Scan },
       { id: 'events', label: 'Events', icon: Calendar },
       { id: 'wishlist', label: 'Service Requests', icon: Heart },
-      { id: 'draw-winners', label: 'Prize Draws', icon: Trophy },
+      { id: 'draw-winners', label: 'Prize Draws', icon: Gift },
     ];
 
     if (user?.userType === 'seller') {
