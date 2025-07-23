@@ -60,17 +60,16 @@ export const useVoiceRecognition = (settings: VoiceSettings) => {
         }
         
         if (finalTranscript) {
+          console.log('🎤 Final transcript:', finalTranscript, 'Confidence:', maxConfidence);
           setTranscript(finalTranscript.trim());
           setConfidence(maxConfidence);
           
-          // Check for wake word
-          const lowerTranscript = finalTranscript.toLowerCase();
-          if (settings.wakeWord === 'hey_flix' && lowerTranscript.includes('hey flix')) {
-            handleWakeWordDetected(finalTranscript);
-          } else if (settings.wakeWord === 'flix_assistant' && lowerTranscript.includes('flix assistant')) {
-            handleWakeWordDetected(finalTranscript);
-          } else if (settings.customWakeWord && lowerTranscript.includes(settings.customWakeWord.toLowerCase())) {
-            handleWakeWordDetected(finalTranscript);
+          // Process any final transcript as a command when manually listening
+          if (isListeningRef.current) {
+            console.log('🚀 Triggering voice command processing...');
+            window.dispatchEvent(new CustomEvent('voice-command', {
+              detail: { command: finalTranscript.trim(), confidence: maxConfidence }
+            }));
           }
         } else if (interimTranscript) {
           setTranscript(interimTranscript.trim());

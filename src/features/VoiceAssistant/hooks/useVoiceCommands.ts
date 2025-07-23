@@ -9,11 +9,13 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
   const [lastResponse, setLastResponse] = useState<VoiceResponse | null>(null);
 
   const processCommand = useCallback(async (transcript: string, confidence: number): Promise<VoiceResponse> => {
+    console.log('🧠 Processing command:', transcript, 'with confidence:', confidence);
     setIsProcessing(true);
     
     try {
       // Process natural language to extract intent and parameters
       const nlpResult = processNaturalLanguage(transcript);
+      console.log('🔍 NLP Result:', nlpResult);
       
       const command: VoiceCommand = {
         id: `cmd_${Date.now()}`,
@@ -26,37 +28,47 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
       };
       
       setLastCommand(command);
+      console.log('📋 Created command:', command);
       
       // Generate response based on intent
       let response: VoiceResponse;
       
       switch (nlpResult.intent) {
         case 'search':
+          console.log('🔍 Handling search command...');
           response = await handleSearchCommand(command);
           break;
         case 'navigation':
+          console.log('🧭 Handling navigation command...');
           response = await handleNavigationCommand(command);
           break;
         case 'notification':
+          console.log('🔔 Handling notification command...');
           response = await handleNotificationCommand(command);
           break;
         case 'reminder':
+          console.log('⏰ Handling reminder command...');
           response = await handleReminderCommand(command);
           break;
         case 'query':
+          console.log('❓ Handling query command...');
           response = await handleQueryCommand(command);
           break;
         case 'control':
+          console.log('🎮 Handling control command...');
           response = await handleControlCommand(command);
           break;
         default:
+          console.log('❌ Unknown intent, using default response');
           response = generateResponse('I didn\'t understand that command. Can you try rephrasing?');
       }
       
+      console.log('✅ Generated response:', response);
       setLastResponse(response);
       return response;
       
     } catch (error) {
+      console.error('❌ Error processing command:', error);
       const errorResponse = generateResponse('Sorry, I encountered an error processing your command.');
       setLastResponse(errorResponse);
       return errorResponse;

@@ -70,8 +70,18 @@ const VoiceInterface: React.FC = () => {
       const { command, confidence } = event.detail;
       
       if (command && confidence > 0.5) {
+        console.log('🎯 Processing voice command:', command);
+        
+        // Stop listening when we get a command
+        if (isManualListening) {
+          stopListening();
+          setIsManualListening(false);
+        }
+        
         resetTranscript();
         const response = await processCommand(command, confidence);
+        
+        console.log('📝 Generated response:', response);
         
         if (response.text) {
           console.log('Speaking response:', response.text);
@@ -87,7 +97,7 @@ const VoiceInterface: React.FC = () => {
 
     window.addEventListener('voice-command', handleVoiceCommand as EventListener);
     return () => window.removeEventListener('voice-command', handleVoiceCommand as EventListener);
-  }, [processCommand, speak, resetTranscript]);
+  }, [processCommand, speak, resetTranscript, isManualListening, stopListening]);
 
   const executeAction = (action: VoiceAction) => {
     switch (action.type) {
