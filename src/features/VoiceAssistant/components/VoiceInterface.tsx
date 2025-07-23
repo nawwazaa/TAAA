@@ -158,27 +158,24 @@ const VoiceInterface: React.FC = () => {
             const destination = action.data.destination || action.data.searchQuery;
             console.log('🎯 Destination:', destination);
             
-            // Use Google Maps app URL scheme that works better
+            // Use the most reliable Google Maps URL format to avoid KML/KMZ errors
             let mapsUrl = '';
             
             if (userLocation) {
-              // Create directions URL using the maps app URL scheme
-              mapsUrl = `https://maps.google.com/maps?saddr=${userLocation.lat},${userLocation.lng}&daddr=${encodeURIComponent(destination)}&dirflg=d`;
-              console.log('🧭 Creating directions URL with user location');
+              // Create directions URL - this is the most reliable format
+              mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
             } else {
-              // Create search URL using maps app URL scheme
-              mapsUrl = `https://maps.google.com/maps?q=${encodeURIComponent(destination)}`;
-              console.log('🔍 Creating search URL without user location');
+              // Create search URL using the Maps API format
+              mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination)}`;
             }
             
-            console.log('🔗 Final Maps URL:', mapsUrl);
+            console.log('🔗 Using Google Maps API URL:', mapsUrl);
             
-            // Try to open in new window first, fallback to same window
-            console.log('🚀 Attempting to open Google Maps...');
+            // Open Google Maps
             const newWindow = window.open(mapsUrl, '_blank');
             
-            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-              console.log('⚠️ Popup blocked, trying same window...');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+              console.log('⚠️ Popup blocked, opening in same window...');
               window.location.href = mapsUrl;
             } else {
               console.log('✅ Successfully opened Google Maps in new tab');
@@ -187,7 +184,7 @@ const VoiceInterface: React.FC = () => {
           } else if (action.data.lat && action.data.lng) {
             // Handle coordinate-based navigation
             const { lat, lng, name, address } = action.data;
-            const mapsUrl = `https://maps.google.com/maps?q=${lat},${lng}`;
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
             console.log('📍 Opening coordinates:', lat, lng);
             console.log('🔗 Coordinates URL:', mapsUrl);
             
@@ -205,7 +202,7 @@ const VoiceInterface: React.FC = () => {
           }
         } catch (error) {
           console.error('❌ Failed to open Google Maps:', error);
-          alert('Unable to open Google Maps. Please check your internet connection.');
+          alert(`Unable to open Google Maps: ${error.message}. Please try manually searching for the destination.`);
         }
         break;
         
@@ -244,34 +241,51 @@ const VoiceInterface: React.FC = () => {
     return (
       <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
         <div className="bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-2xl p-6">
-               // Use the most reliable Google Maps URL format to avoid KML/KMZ errors
-               let mapsUrl = '';
-               
-               if (userLocation) {
-                 // Create directions URL - this is the most reliable format
-                 mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
-               } else {
-                 // Create search URL using the Maps API format
-                 mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination)}`;
-               }
-               
-               console.log('🔗 Using Google Maps API URL:', mapsUrl);
-               
-               // Open Google Maps
-               const newWindow = window.open(mapsUrl, '_blank');
-               
-               if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                 console.log('⚠️ Popup blocked, opening in same window...');
-                 window.location.href = mapsUrl;
-               } else {
-                 console.log('✅ Successfully opened Google Maps in new tab');
-               }
+          <h2 className="text-xl font-bold mb-2">Voice Assistant Not Supported</h2>
+          <p>Your browser doesn't support voice recognition. Please use Chrome, Safari, or Edge for the best experience.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
+      {/* Voice Control Panel */}
+      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">🎤 FlixAssistant Voice Control</h2>
+            <p className="text-purple-100">
+              {isWakeWordListening ? 'Listening for "Hey Flix"...' : 'Voice assistant is ready'}
+            </p>
+          </div>
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            {isListening && (
+              <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-sm">Listening...</span>
+              </div>
+            )}
+            {isSpeaking && (
+              <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                <Volume2 className="w-5 h-5 animate-pulse" />
+                <span className="text-sm">Speaking...</span>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button
+              onClick={handleManualListening}
               className={`px-6 py-3 rounded-lg font-medium transition-colors ${
                 isManualListening
                   ? 'bg-red-500 text-white hover:bg-red-600'
                   : 'bg-blue-500 text-white hover:bg-blue-600'
-               const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-             alert(`Unable to open Google Maps: ${error.message}. Please try manually searching for the destination.`);
+              }`}
+            >
+              {isManualListening ? <MicOff className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" /> : <Mic className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />}
               {isManualListening ? 'Stop Manual Mode' : 'Manual Listen'}
             </button>
             
