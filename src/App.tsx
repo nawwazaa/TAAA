@@ -18,6 +18,7 @@ import EventsManager from './components/Events/EventsManager';
 import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
+import { DrawWinnersSystem } from './features/DrawWinners';
 import { QrCode, Video, Wallet, Plus, Minus, Gift } from 'lucide-react';
 import './i18n';
 
@@ -119,6 +120,10 @@ const AppContent: React.FC = () => {
       case 'wishlist':
         return (
           <WishlistManager />
+        );
+      case 'draw-winners':
+        return (
+          <DrawWinnersSystem />
         );
       case 'wallet-management':
         return (

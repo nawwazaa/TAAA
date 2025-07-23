@@ -17,7 +17,8 @@ import {
   Calendar,
   Heart,
   Menu,
-  X
+  X,
+  Trophy
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -42,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       { id: 'qr-redemption', label: 'QR Redemption', icon: Scan },
       { id: 'events', label: 'Events', icon: Calendar },
       { id: 'wishlist', label: 'Service Requests', icon: Heart },
+      { id: 'draw-winners', label: 'Prize Draws', icon: Trophy },
     ];
 
     if (user?.userType === 'seller') {
