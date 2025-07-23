@@ -212,12 +212,14 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
     const { destination, type } = command.parameters;
     
     console.log('🧭 Navigation command - destination:', destination);
+    console.log('🧭 Full command parameters:', command.parameters);
     
     if (!destination) {
       return generateResponse('Where would you like me to take you?');
     }
     
-    // For specific destinations like "airport", "mall", etc., open Google Maps directly
+    console.log('🎯 Creating navigation action for:', destination);
+    
     const actions: VoiceAction[] = [{
       type: 'open_map',
       data: {
@@ -228,15 +230,11 @@ export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) =>
       label: `Get directions to ${destination}`
     }];
     
-    // Auto-execute the map opening
-    setTimeout(() => {
-      console.log('🗺️ Auto-opening Google Maps for:', destination);
-      openGoogleMapsSearch(destination, userLocation);
-    }, 1000);
+    console.log('✅ Created navigation action:', actions[0]);
     
     return {
       id: `resp_${Date.now()}`,
-      text: `Opening Google Maps with directions to ${destination}. Please wait a moment.`,
+      text: `Getting directions to ${destination}. Opening Google Maps now.`,
       actions,
       timestamp: new Date()
     };

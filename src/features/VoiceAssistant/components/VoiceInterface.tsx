@@ -144,44 +144,81 @@ const VoiceInterface: React.FC = () => {
   }, [processCommand, speak, resetTranscript, isManualListening, stopListening]);
 
   const executeAction = (action: VoiceAction) => {
+    console.log('🎯 Executing action:', action.type, action.data);
+    
     switch (action.type) {
       case 'open_map':
         console.log('🗺️ Executing map action:', action.data);
-        if (action.data.searchQuery || action.data.destination) {
-          const query = action.data.searchQuery || action.data.destination;
-          console.log('🔍 Opening Google Maps for:', query);
+        
+        // Handle different types of map data
+        if (action.data.destination || action.data.searchQuery) {
+          const destination = action.data.destination || action.data.searchQuery;
+          console.log('🎯 Destination:', destination);
           
-          // Create Google Maps URL
           let mapsUrl = '';
+          
           if (userLocation) {
-            // Search with directions from user's location
-            mapsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${encodeURIComponent(query)}`;
+            // Create directions URL from user location to destination
+            mapsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${encodeURIComponent(destination)}`;
+            console.log('🧭 Creating directions URL with user location');
           } else {
-            // Simple search
-            mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+            // Create search URL for destination
+            mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(destination)}`;
+            console.log('🔍 Creating search URL without user location');
           }
           
-          console.log('🔗 Opening URL:', mapsUrl);
-          window.open(mapsUrl, '_blank');
-        } else {
-          // Open specific coordinates
-          const { lat, lng, name } = action.data;
+          console.log('🔗 Final Maps URL:', mapsUrl);
+          
+          // Try to open the URL
+          try {
+            const newWindow = window.open(mapsUrl, '_blank');
+            if (newWindow) {
+              console.log('✅ Successfully opened Google Maps');
+            } else {
+              console.error('❌ Failed to open Google Maps - popup blocked?');
+              alert('Please allow popups to open Google Maps, or copy this URL: ' + mapsUrl);
+            }
+          } catch (error) {
+            console.error('❌ Error opening Google Maps:', error);
+            alert('Error opening Google Maps. URL: ' + mapsUrl);
+          }
+          
+        } else if (action.data.lat && action.data.lng) {
+          // Handle coordinate-based navigation
+          const { lat, lng, name, address } = action.data;
           const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-          console.log('🔗 Opening coordinates URL:', mapsUrl);
-          window.open(mapsUrl, '_blank');
+          console.log('📍 Opening coordinates:', lat, lng);
+          console.log('🔗 Coordinates URL:', mapsUrl);
+          
+          try {
+            const newWindow = window.open(mapsUrl, '_blank');
+            if (newWindow) {
+              console.log('✅ Successfully opened Google Maps with coordinates');
+            } else {
+              console.error('❌ Failed to open Google Maps - popup blocked?');
+            }
+          } catch (error) {
+            console.error('❌ Error opening Google Maps:', error);
+          }
+        } else {
+          console.error('❌ No valid map data provided:', action.data);
         }
         break;
+        
       case 'navigate':
+        console.log('🧭 Navigating to page:', action.data.page);
         if (action.data.page) {
           window.dispatchEvent(new CustomEvent('navigate-to-tab', { detail: action.data.page }));
         }
         break;
+        
       case 'set_reminder':
-        // Integrate with reminder system
-        console.log('Setting reminder:', action.data);
+        console.log('⏰ Setting reminder:', action.data);
+        alert(`Reminder set: ${action.data.task}`);
         break;
+        
       default:
-        console.log('Unknown action:', action);
+        console.log('❓ Unknown action type:', action.type, action.data);
     }
   };
 
