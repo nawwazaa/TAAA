@@ -193,6 +193,14 @@ const VoiceInterface: React.FC = () => {
               onClick={() => speak('Hello! This is FlixAssistant. I can help you find nearby restaurants, read notifications, and control the app with voice commands.')}
               disabled={isSpeaking}
               className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50 flex items-center space-x-2 rtl:space-x-reverse"
+              onMouseDown={() => {
+                // Force user interaction for speech synthesis
+                if (!window.speechSynthesis.speaking) {
+                  const testUtterance = new SpeechSynthesisUtterance('');
+                  window.speechSynthesis.speak(testUtterance);
+                  window.speechSynthesis.cancel();
+                }
+              }}
             >
               <Volume2 className="w-5 h-5" />
               <span>Test Voice</span>
