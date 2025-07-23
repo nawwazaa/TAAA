@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { VoiceCommand, VoiceResponse, VoiceAction, LocationResult } from '../types';
 import { processNaturalLanguage, generateResponse } from '../utils/nlp';
-import { findNearbyPlaces } from '../utils/locationServices';
+import { findNearbyPlaces, openGoogleMapsSearch } from '../utils/locationServices';
 
 export const useVoiceCommands = (userLocation?: { lat: number; lng: number }) => {
   const [isProcessing, setIsProcessing] = useState(false);
