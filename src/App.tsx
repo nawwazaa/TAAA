@@ -19,6 +19,7 @@ import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
 import { DrawWinnersSystem } from './features/DrawWinners';
+import { WalletManagementSystem } from './features/WalletManagement';
 import { QrCode, Video, Wallet, Plus, Minus, Gift } from 'lucide-react';
 import './i18n';
 
@@ -125,74 +126,9 @@ const AppContent: React.FC = () => {
         return (
           <DrawWinnersSystem />
         );
-      case 'wallet-management':
+      case 'wallet':
         return (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl p-6">
-              <h1 className="text-2xl font-bold mb-2">Wallet Management</h1>
-              <p className="text-orange-100">Manage your Flixbits and transactions</p>
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="text-center mb-6">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{user?.flixbits.toLocaleString()} Flixbits</h2>
-                <p className="text-gray-600">≈ ${((user?.flixbits || 0) * 0.1).toFixed(2)} USD</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button className="bg-gradient-to-r from-green-500 to-teal-500 text-white p-4 rounded-lg font-medium hover:from-green-600 hover:to-teal-600 transition-colors">
-                  <div className="text-center">
-                    <Plus className="w-6 h-6 mx-auto mb-2" />
-                    <div className="font-bold">Buy Flixbits</div>
-                    <div className="text-sm opacity-90">$0.10 per Flixbit</div>
-                  </div>
-                </button>
-                
-                <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg font-medium hover:from-blue-600 hover:to-purple-600 transition-colors">
-                  <div className="text-center">
-                    <Minus className="w-6 h-6 mx-auto mb-2" />
-                    <div className="font-bold">Sell Flixbits</div>
-                    <div className="text-sm opacity-90">$0.08 per Flixbit</div>
-                  </div>
-                </button>
-                
-                <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition-colors">
-                  <div className="text-center">
-                    <Gift className="w-6 h-6 mx-auto mb-2" />
-                    <div className="font-bold">Redeem Rewards</div>
-                    <div className="text-sm opacity-90">Exchange for prizes</div>
-                  </div>
-                </button>
-              </div>
-              
-              <div className="mt-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Recent Transactions</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900">Game Prediction Reward</p>
-                      <p className="text-sm text-gray-600">January 14, 2024</p>
-                    </div>
-                    <span className="text-green-600 font-bold">+150 Flixbits</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900">Video Rating Bonus</p>
-                      <p className="text-sm text-gray-600">January 13, 2024</p>
-                    </div>
-                    <span className="text-green-600 font-bold">+25 Flixbits</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900">Welcome Bonus</p>
-                      <p className="text-sm text-gray-600">January 12, 2024</p>
-                    </div>
-                    <span className="text-green-600 font-bold">+100 Flixbits</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WalletManagementSystem />
         );
       case 'profile':
         return (

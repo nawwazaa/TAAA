@@ -35,6 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   const getMenuItems = () => {
     const commonItems = [
       { id: 'dashboard', label: t('dashboard'), icon: Home },
+      { id: 'wallet', label: 'Wallet', icon: Wallet },
       { id: 'profile', label: t('profile'), icon: User },
       { id: 'tournaments', label: t('tournaments'), icon: Trophy },
       { id: 'rewards', label: t('rewards'), icon: Gift },
