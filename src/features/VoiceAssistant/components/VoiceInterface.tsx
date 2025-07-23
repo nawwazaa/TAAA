@@ -132,13 +132,10 @@ const VoiceInterface: React.FC = () => {
           speak(response.text);
         }
         
-        // Don't auto-execute open_map actions to avoid popup blockers
-        // User must click the button in the UI instead
+        // Execute all actions including open_map
         if (response.actions) {
           response.actions.forEach(action => {
-            if (action.type !== 'open_map') {
-              executeAction(action);
-            }
+            executeAction(action);
           });
         }
       }
@@ -174,19 +171,9 @@ const VoiceInterface: React.FC = () => {
           
           console.log('🔗 Final Maps URL:', mapsUrl);
           
-          // Try to open the URL
-          try {
-            const newWindow = window.open(mapsUrl, '_blank');
-            if (newWindow) {
-              console.log('✅ Successfully opened Google Maps');
-            } else {
-              console.error('❌ Failed to open Google Maps - popup blocked?');
-              alert('Please allow popups to open Google Maps, or copy this URL: ' + mapsUrl);
-            }
-          } catch (error) {
-            console.error('❌ Error opening Google Maps:', error);
-            alert('Error opening Google Maps. URL: ' + mapsUrl);
-          }
+          // Use window.location to navigate directly (no popup blocker)
+          console.log('🚀 Opening Google Maps directly...');
+          window.location.href = mapsUrl;
           
         } else if (action.data.lat && action.data.lng) {
           // Handle coordinate-based navigation
@@ -195,16 +182,9 @@ const VoiceInterface: React.FC = () => {
           console.log('📍 Opening coordinates:', lat, lng);
           console.log('🔗 Coordinates URL:', mapsUrl);
           
-          try {
-            const newWindow = window.open(mapsUrl, '_blank');
-            if (newWindow) {
-              console.log('✅ Successfully opened Google Maps with coordinates');
-            } else {
-              console.error('❌ Failed to open Google Maps - popup blocked?');
-            }
-          } catch (error) {
-            console.error('❌ Error opening Google Maps:', error);
-          }
+          // Use window.location to navigate directly
+          console.log('🚀 Opening Google Maps with coordinates...');
+          window.location.href = mapsUrl;
         } else {
           console.error('❌ No valid map data provided:', action.data);
         }
@@ -334,14 +314,6 @@ const VoiceInterface: React.FC = () => {
               onClick={() => speak('Hello! This is FlixAssistant. I can help you find nearby restaurants, read notifications, and control the app with voice commands.')}
               disabled={isSpeaking}
               className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50 flex items-center space-x-2 rtl:space-x-reverse"
-              onMouseDown={() => {
-                // Force user interaction for speech synthesis
-                if (!window.speechSynthesis.speaking) {
-                  const testUtterance = new SpeechSynthesisUtterance('');
-                  window.speechSynthesis.speak(testUtterance);
-                  window.speechSynthesis.cancel();
-                }
-              }}
             >
               <Volume2 className="w-5 h-5" />
               <span>Test Voice</span>
@@ -472,10 +444,10 @@ const VoiceInterface: React.FC = () => {
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h4 className="font-bold text-blue-800 mb-2">🗺️ Google Maps Integration</h4>
           <div className="space-y-1 text-blue-700 text-sm">
-            <p>• "Hey Flix, take me to the airport" → Opens Google Maps with directions</p>
-            <p>• "Navigate to Dubai Mall" → Shows turn-by-turn directions</p>
-            <p>• "Where is the nearest hospital?" → Opens map search</p>
-            <p>• All navigation commands automatically open Google Maps!</p>
+            <p>• "Hey Flix, take me to the airport" → Automatically opens Google Maps with directions</p>
+            <p>• "Navigate to Dubai Mall" → Direct navigation to destination</p>
+            <p>• "Where is the nearest hospital?" → Opens map search instantly</p>
+            <p>• <strong>No popup blockers!</strong> Maps open directly in same tab</p>
           </div>
         </div>
       </div>
