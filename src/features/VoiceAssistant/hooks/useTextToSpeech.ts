@@ -75,7 +75,6 @@ export const useTextToSpeech = (settings: VoiceSettings) => {
       setTimeout(() => {
         window.speechSynthesis.speak(utterance);
       }, 100);
-      window.speechSynthesis.speak(utterance);
 
     } catch (error) {
       setError('Failed to speak text');
