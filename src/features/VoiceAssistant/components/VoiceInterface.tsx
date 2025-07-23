@@ -40,6 +40,7 @@ const VoiceInterface: React.FC = () => {
   
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isManualListening, setIsManualListening] = useState(false);
+  const [isWakeWordListening, setIsWakeWordListening] = useState(false);
   
   const { 
     isListening, 
@@ -63,6 +64,49 @@ const VoiceInterface: React.FC = () => {
         .catch(error => console.warn('Could not get location:', error));
     }
   }, [voiceSettings.locationServices]);
+
+  // Auto-start wake word listening when component mounts
+  useEffect(() => {
+    if (voiceSettings.isEnabled && isSupported) {
+      setIsWakeWordListening(true);
+      startListening();
+    }
+  }, [voiceSettings.isEnabled, isSupported, startListening]);
+
+  // Listen for wake words in transcript
+  useEffect(() => {
+    if (transcript && isWakeWordListening && !isManualListening) {
+      const lowerTranscript = transcript.toLowerCase();
+      const wakeWords = ['hey flix', 'flix assistant'];
+      
+      for (const wakeWord of wakeWords) {
+        if (lowerTranscript.includes(wakeWord)) {
+          console.log('🎯 Wake word detected:', wakeWord);
+          
+          // Extract command after wake word
+          const commandStart = lowerTranscript.indexOf(wakeWord) + wakeWord.length;
+          const command = transcript.substring(commandStart).trim();
+          
+          if (command) {
+            console.log('🚀 Processing wake word command:', command);
+            
+            // Process the command
+            processCommand(command, confidence).then(response => {
+              if (response.text) {
+                speak(response.text);
+              }
+              if (response.actions) {
+                response.actions.forEach(action => executeAction(action));
+              }
+            });
+            
+            resetTranscript();
+          }
+          break;
+        }
+      }
+    }
+  }, [transcript, isWakeWordListening, isManualListening, confidence, processCommand, speak, resetTranscript]);
 
   // Listen for voice commands
   useEffect(() => {
@@ -102,10 +146,29 @@ const VoiceInterface: React.FC = () => {
   const executeAction = (action: VoiceAction) => {
     switch (action.type) {
       case 'open_map':
-        if (action.data.searchQuery) {
-          openGoogleMapsSearch(action.data.searchQuery, action.data.userLocation);
+        console.log('🗺️ Executing map action:', action.data);
+        if (action.data.searchQuery || action.data.destination) {
+          const query = action.data.searchQuery || action.data.destination;
+          console.log('🔍 Opening Google Maps for:', query);
+          
+          // Create Google Maps URL
+          let mapsUrl = '';
+          if (userLocation) {
+            // Search with directions from user's location
+            mapsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${encodeURIComponent(query)}`;
+          } else {
+            // Simple search
+            mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+          }
+          
+          console.log('🔗 Opening URL:', mapsUrl);
+          window.open(mapsUrl, '_blank');
         } else {
-          openGoogleMaps(action.data);
+          // Open specific coordinates
+          const { lat, lng, name } = action.data;
+          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+          console.log('🔗 Opening coordinates URL:', mapsUrl);
+          window.open(mapsUrl, '_blank');
         }
         break;
       case 'navigate':
@@ -159,13 +222,13 @@ const VoiceInterface: React.FC = () => {
         <div className="text-center">
           <div className="mb-6">
             <div className={`w-32 h-32 rounded-full mx-auto flex items-center justify-center transition-all duration-300 ${
-              isListening 
+              isListening || isWakeWordListening
                 ? 'bg-gradient-to-r from-red-500 to-pink-500 animate-pulse' 
                 : isSpeaking
                 ? 'bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse'
                 : 'bg-gradient-to-r from-gray-400 to-gray-500'
             }`}>
-              {isListening ? (
+              {isListening || isWakeWordListening ? (
                 <Mic className="w-16 h-16 text-white" />
               ) : isSpeaking ? (
                 <Volume2 className="w-16 h-16 text-white" />
@@ -175,8 +238,11 @@ const VoiceInterface: React.FC = () => {
             </div>
             
             <div className="mt-4">
-              {isListening && (
-                <div className="text-red-600 font-bold text-lg">🎤 Listening...</div>
+              {isWakeWordListening && !isManualListening && (
+                <div className="text-blue-600 font-bold text-lg">👂 Listening for "Hey Flix"...</div>
+              )}
+              {isManualListening && (
+                <div className="text-red-600 font-bold text-lg">🎤 Listening for command...</div>
               )}
               {isSpeaking && (
                 <div className="text-blue-600 font-bold text-lg">🔊 Speaking...</div>
@@ -184,7 +250,7 @@ const VoiceInterface: React.FC = () => {
               {isProcessing && (
                 <div className="text-purple-600 font-bold text-lg">🧠 Processing...</div>
               )}
-              {!isListening && !isSpeaking && !isProcessing && (
+              {!isListening && !isSpeaking && !isProcessing && !isWakeWordListening && (
                 <div className="text-gray-600 text-lg">Say "Hey Flix" or tap to start</div>
               )}
             </div>
@@ -193,14 +259,33 @@ const VoiceInterface: React.FC = () => {
           <div className="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
             <button
               onClick={handleManualListening}
-              disabled={isProcessing}
+              disabled={isProcessing || isWakeWordListening}
               className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                isListening
+                isManualListening
                   ? 'bg-red-500 text-white hover:bg-red-600'
                   : 'bg-blue-500 text-white hover:bg-blue-600'
               } disabled:opacity-50`}
             >
-              {isListening ? 'Stop Listening' : 'Start Listening'}
+              {isManualListening ? 'Stop Manual Mode' : 'Manual Listen'}
+            </button>
+            
+            <button
+              onClick={() => {
+                if (isWakeWordListening) {
+                  stopListening();
+                  setIsWakeWordListening(false);
+                } else {
+                  setIsWakeWordListening(true);
+                  startListening();
+                }
+              }}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                isWakeWordListening
+                  ? 'bg-orange-500 text-white hover:bg-orange-600'
+                  : 'bg-green-500 text-white hover:bg-green-600'
+              }`}
+            >
+              {isWakeWordListening ? 'Disable Wake Word' : 'Enable Wake Word'}
             </button>
             
             <button
@@ -287,7 +372,7 @@ const VoiceInterface: React.FC = () => {
 
       {/* Quick Commands */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">🚀 Quick Voice Commands</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-4">🚀 Voice Commands (Say "Hey Flix" first)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <h4 className="font-semibold text-gray-800 flex items-center">
@@ -295,7 +380,7 @@ const VoiceInterface: React.FC = () => {
               Location & Navigation
             </h4>
             <div className="space-y-2 text-sm text-gray-600">
-              <p>• "Find nearby restaurants with offers"</p>
+              <p>• "Hey Flix, find nearby restaurants with offers"</p>
               <p>• "Where is the closest mall?"</p>
               <p>• "Take me to Dubai Mall"</p>
               <p>• "Show me gas stations nearby"</p>
@@ -339,6 +424,16 @@ const VoiceInterface: React.FC = () => {
               <p>• "Show me current offers"</p>
               <p>• "What's my balance?"</p>
             </div>
+          </div>
+        </div>
+        
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-bold text-blue-800 mb-2">🗺️ Google Maps Integration</h4>
+          <div className="space-y-1 text-blue-700 text-sm">
+            <p>• "Hey Flix, take me to the airport" → Opens Google Maps with directions</p>
+            <p>• "Navigate to Dubai Mall" → Shows turn-by-turn directions</p>
+            <p>• "Where is the nearest hospital?" → Opens map search</p>
+            <p>• All navigation commands automatically open Google Maps!</p>
           </div>
         </div>
       </div>
