@@ -227,23 +227,12 @@ const AuthForm: React.FC = () => {
                             key={interest}
                             type="button"
                             onClick={() => handleInterestToggle(interest)}
-                            <div className="flex justify-between items-start mb-2">
-                              <div className="font-bold text-blue-900">{account.name}</div>
-                              <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                                account.userType === 'user' ? 'bg-green-100 text-green-800' :
-                                account.userType === 'seller' ? 'bg-blue-100 text-blue-800' :
-                                account.userType === 'influencer' ? 'bg-purple-100 text-purple-800' :
-                                'bg-red-100 text-red-800'
-                              }`}>
-                                {account.userType === 'user' && account.email.includes('admin') ? 'ADMIN' : account.userType.toUpperCase()}
-                              </span>
-                            </div>
+                            className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
                               formData.interests.includes(interest)
                                 ? 'bg-blue-500 text-white border-blue-500'
                                 : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                            <div className="text-blue-600 text-xs flex justify-between items-center mt-2">
-                              <span className="font-medium">💰 {account.flixbits.toLocaleString()} Flixbits</span>
-                              <span className="text-gray-500">📍 {account.location?.city}</span>
+                            }`}
+                          >
                             {interest}
                           </button>
                         ))}
@@ -405,10 +394,25 @@ const AuthForm: React.FC = () => {
                           }}
                           className="bg-white border border-blue-300 rounded-lg p-3 hover:bg-blue-100 transition-colors text-left"
                         >
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="font-bold text-blue-900">{account.name}</div>
+                            <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                              account.userType === 'user' ? 'bg-green-100 text-green-800' :
+                              account.userType === 'seller' ? 'bg-blue-100 text-blue-800' :
+                              account.userType === 'influencer' ? 'bg-purple-100 text-purple-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {account.userType === 'user' && account.email.includes('admin') ? 'ADMIN' : account.userType.toUpperCase()}
+                            </span>
+                          </div>
                           <div className="font-medium text-blue-900">{account.name}</div>
                           <div className="text-blue-700 text-xs">📧 {account.email}</div>
                           <div className="text-blue-600 text-xs">📱 {account.phone}</div>
                           <div className="text-blue-500 text-xs">🔑 Password: test123</div>
+                          <div className="text-blue-600 text-xs flex justify-between items-center mt-2">
+                            <span className="font-medium">💰 {account.flixbits.toLocaleString()} Flixbits</span>
+                            <span className="text-gray-500">📍 {account.location?.city}</span>
+                          </div>
                           <div className="text-blue-600 text-xs capitalize">
                             {account.userType} • {account.flixbits} Flixbits
                           </div>
