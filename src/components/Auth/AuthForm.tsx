@@ -6,8 +6,9 @@ import { generateQRCode, generateUserQRData } from '../../utils/qrCode';
 
 const AuthForm: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { login } = useAuth();
+  const { login, loginWithTestAccount, testAccounts } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showTestAccounts, setShowTestAccounts] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -106,6 +107,14 @@ const AuthForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
+    // Check if it's a test account login
+    if (!isSignUp && testAccounts[formData.email as keyof typeof testAccounts]) {
+      const success = loginWithTestAccount(formData.email);
+      if (success) {
+        setLoading(false);
+        return;
+      }
+    }
     try {
       // Generate QR code for the user
       const qrData = generateUserQRData(`user_${Date.now()}`, formData.userType);
@@ -357,6 +366,40 @@ const AuthForm: React.FC = () => {
             </button>
 
             <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setShowTestAccounts(!showTestAccounts)}
+                className="text-blue-600 hover:text-blue-700 font-medium mb-4"
+              >
+                {showTestAccounts ? 'Hide Test Accounts' : 'Show Test Accounts (For Testing)'}
+              </button>
+              
+              {showTestAccounts && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <h3 className="font-bold text-blue-800 mb-3">🧪 Test Accounts</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="grid grid-cols-1 gap-2">
+                      {Object.entries(testAccounts).map(([email, account]) => (
+                        <button
+                          key={email}
+                          onClick={() => {
+                            loginWithTestAccount(email);
+                            setShowTestAccounts(false);
+                          }}
+                          className="bg-white border border-blue-300 rounded-lg p-3 hover:bg-blue-100 transition-colors text-left"
+                        >
+                          <div className="font-medium text-blue-900">{account.name}</div>
+                          <div className="text-blue-700 text-xs">{email}</div>
+                          <div className="text-blue-600 text-xs capitalize">
+                            {account.userType} • {account.flixbits} Flixbits
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
