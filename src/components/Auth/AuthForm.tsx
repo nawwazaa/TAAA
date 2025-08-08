@@ -227,12 +227,23 @@ const AuthForm: React.FC = () => {
                             key={interest}
                             type="button"
                             onClick={() => handleInterestToggle(interest)}
-                            className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
+                            <div className="flex justify-between items-start mb-2">
+                              <div className="font-bold text-blue-900">{account.name}</div>
+                              <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                                account.userType === 'user' ? 'bg-green-100 text-green-800' :
+                                account.userType === 'seller' ? 'bg-blue-100 text-blue-800' :
+                                account.userType === 'influencer' ? 'bg-purple-100 text-purple-800' :
+                                'bg-red-100 text-red-800'
+                              }`}>
+                                {account.userType === 'user' && account.email.includes('admin') ? 'ADMIN' : account.userType.toUpperCase()}
+                              </span>
+                            </div>
                               formData.interests.includes(interest)
                                 ? 'bg-blue-500 text-white border-blue-500'
                                 : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                            }`}
-                          >
+                            <div className="text-blue-600 text-xs flex justify-between items-center mt-2">
+                              <span className="font-medium">💰 {account.flixbits.toLocaleString()} Flixbits</span>
+                              <span className="text-gray-500">📍 {account.location?.city}</span>
                             {interest}
                           </button>
                         ))}
