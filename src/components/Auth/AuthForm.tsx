@@ -359,7 +359,7 @@ const AuthForm: React.FC = () => {
 
             <button
               type="submit"
-              disabled={loading || (isSignUp && !otpSent)}
+              disabled={loading || (isSignUp && !otpSent) || (!isSignUp && (!formData.email || !formData.phone || !formData.password))}
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 disabled:opacity-50 transition-all duration-200"
             >
               {loading ? t('loading') : (isSignUp ? t('signUp') : t('signIn'))}
@@ -377,24 +377,37 @@ const AuthForm: React.FC = () => {
               {showTestAccounts && (
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                   <h3 className="font-bold text-blue-800 mb-3">🧪 Test Accounts</h3>
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div className="grid grid-cols-1 gap-2">
                       {Object.entries(testAccounts).map(([email, account]) => (
                         <button
                           key={email}
                           onClick={() => {
-                            loginWithTestAccount(email);
+                            // Auto-fill the form with test account data
+                            setFormData(prev => ({
+                              ...prev,
+                              email: account.email,
+                              phone: account.phone,
+                              password: 'test123'
+                            }));
                             setShowTestAccounts(false);
                           }}
                           className="bg-white border border-blue-300 rounded-lg p-3 hover:bg-blue-100 transition-colors text-left"
                         >
                           <div className="font-medium text-blue-900">{account.name}</div>
-                          <div className="text-blue-700 text-xs">{email}</div>
+                          <div className="text-blue-700 text-xs">📧 {account.email}</div>
+                          <div className="text-blue-600 text-xs">📱 {account.phone}</div>
+                          <div className="text-blue-500 text-xs">🔑 Password: test123</div>
                           <div className="text-blue-600 text-xs capitalize">
                             {account.userType} • {account.flixbits} Flixbits
                           </div>
                         </button>
                       ))}
+                    </div>
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-3">
+                      <p className="text-yellow-800 text-xs">
+                        💡 <strong>How to use:</strong> Click any account above to auto-fill the login form, then click "Sign In"
+                      </p>
                     </div>
                   </div>
                 </div>
