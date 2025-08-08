@@ -75,15 +75,6 @@ const AppContent: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="relative">
-        {/* View Mode Toggle */}
-        <div className="fixed top-4 right-4 z-50">
-          <button
-            onClick={() => setViewMode('ios')}
-            className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg"
-          >
-            View iOS App
-          </button>
-        </div>
         <AuthForm />
       </div>
     );
@@ -207,20 +198,19 @@ const AppContent: React.FC = () => {
 
   return (
     <div className={`min-h-screen bg-gray-50 ${i18n.language === 'ar' ? 'rtl' : 'ltr'} relative`}>
-      {/* View Mode Toggle */}
-      <div className="fixed top-4 right-4 z-50 hidden md:block">
-        <button
-          onClick={() => setViewMode('ios')}
-          className="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg"
-        >
-          View iOS App
-        </button>
-      </div>
-      
       <Header />
       <div className="flex flex-col md:flex-row min-h-screen">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
         <main className="flex-1 p-2 md:p-4 min-w-0 overflow-hidden">
+          {/* View Mode Toggle - Moved inside main content */}
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setViewMode('ios')}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg hover:bg-blue-600 transition-colors"
+            >
+              📱 View iOS App
+            </button>
+          </div>
           {renderMainContent()}
         </main>
       </div>
