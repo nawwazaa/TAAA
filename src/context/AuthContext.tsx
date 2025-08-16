@@ -9,6 +9,8 @@ interface AuthContextType {
   generateReferralCode: () => string;
   trackReferral: (referralCode: string) => Promise<boolean>;
   getReferrals: () => Referral[];
+  loginWithTestAccount: (email: string) => boolean;
+  testAccounts: any;
   isAuthenticated: boolean;
 }
 
