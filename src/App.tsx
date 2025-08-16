@@ -18,6 +18,7 @@ import EventsManager from './components/Events/EventsManager';
 import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
+import InfluencerDashboard from './components/Dashboard/InfluencerDashboard';
 import { DrawWinnersSystem } from './features/DrawWinners';
 import { WalletManagementSystem } from './features/WalletManagement';
 import { VoiceAssistantSystem } from './features/VoiceAssistant';
@@ -30,6 +31,20 @@ const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState<'web' | 'ios'>('web');
 
+  // Helper function to check if user is admin
+  const isAdminUser = (user: any) => {
+    if (!user) return false;
+    
+    // Super admin
+    if (user.email === 'admin@flixmarket.com') return true;
+    
+    // Sub-admins (all emails ending with @flixmarket.com except regular users)
+    if (user.email?.endsWith('@flixmarket.com') && user.email !== 'admin@flixmarket.com') {
+      return true;
+    }
+    
+    return false;
+  };
   useEffect(() => {
     document.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = i18n.language;
@@ -81,17 +96,33 @@ const AppContent: React.FC = () => {
   }
 
   const renderMainContent = () => {
-    // Admin panel access
-    if (activeTab === 'admin' && user?.email === 'admin@flixmarket.com') {
-      return <AdminPanel />;
-    }
 
     switch (activeTab) {
       case 'dashboard':
         if (user?.userType === 'seller') {
           return <SellerDashboard />;
         }
-        return <AdminPanel />;
+        if (user?.userType === 'influencer') {
+          return <InfluencerDashboard />;
+        }
+        if (user?.userType === 'user') {
+          return <UserDashboard />;
+        }
+        // Only admins get admin panel
+        if (isAdminUser(user)) {
+          return <AdminPanel />;
+        }
+        return <UserDashboard />; // Default fallback
+      case 'admin':
+        // Only allow admin access to actual admins
+        if (isAdminUser(user)) {
+          return <AdminPanel />;
+        }
+        // Redirect non-admins to their appropriate dashboard
+        return <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <h2 className="text-xl font-bold text-red-800 mb-2">🚫 Access Denied</h2>
+          <p className="text-red-600">You don't have permission to access the admin panel.</p>
+        </div>;
       case 'tournaments':
         return <GamePredictions />;
       case 'qr-code':

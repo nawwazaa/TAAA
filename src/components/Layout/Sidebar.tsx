@@ -75,14 +75,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
 
   const menuItems = getMenuItems();
 
-  if (user?.userType === 'seller' || user?.userType === 'influencer') {
-    menuItems.push({ id: 'location', label: t('location'), icon: MapPin });
-  }
-
-  // Add admin items for admin users
-  if (user?.email === 'admin@flixmarket.com') {
-    menuItems.push({ id: 'admin', label: t('admin'), icon: Settings });
-  }
 
   return (
     <aside className={`flex-shrink-0 w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
