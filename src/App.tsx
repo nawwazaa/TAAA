@@ -18,7 +18,7 @@ import EventsManager from './components/Events/EventsManager';
 import OfferManager from './components/Offers/OfferManager';
 import WishlistManager from './components/Wishlist/WishlistManager';
 import iOSApp from './components/Mobile/iOS/iOSApp';
-import InfluencerDashboard from './components/Dashboard/InfluencerDashboard';
+import InfluencerDashboard from './components/Dashboard/InfluencerDashboard.tsx';
 import { DrawWinnersSystem } from './features/DrawWinners';
 import { WalletManagementSystem } from './features/WalletManagement';
 import { VoiceAssistantSystem } from './features/VoiceAssistant';
