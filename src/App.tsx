@@ -99,20 +99,18 @@ const AppContent: React.FC = () => {
 
     switch (activeTab) {
       case 'dashboard':
+        // Check if user is admin first
+        if (isAdminUser(user)) {
+          return <AdminPanel />;
+        }
         if (user?.userType === 'seller') {
           return <SellerDashboard />;
         }
         if (user?.userType === 'influencer') {
           return <InfluencerDashboard />;
         }
-        if (user?.userType === 'user') {
-          return <UserDashboard />;
-        }
-        // Only admins get admin panel
-        if (isAdminUser(user)) {
-          return <AdminPanel />;
-        }
-        return <UserDashboard />; // Default fallback
+        // Default to UserDashboard for regular users
+        return <UserDashboard />;
       case 'admin':
         // Only allow admin access to actual admins
         if (isAdminUser(user)) {
