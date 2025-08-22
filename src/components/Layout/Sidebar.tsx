@@ -103,38 +103,26 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       {/* Mobile Hamburger Button - Fixed position */}
       <button
         onClick={handleMobileMenuToggle}
-        className="mobile-menu-button md:hidden fixed top-4 left-4 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+        className="mobile-menu-button md:hidden fixed top-2 left-2 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
       >
         <Menu className="w-6 h-6 text-gray-600" />
       </button>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" />
+        <div 
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
       )}
 
       {/* Mobile Sidebar */}
-      <aside className={`mobile-menu md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl border-r border-gray-200 transform transition-transform duration-300 ease-in-out ${
+      <aside className={`mobile-menu md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 w-full bg-white shadow-xl border-t border-gray-200 transform transition-transform duration-300 ease-in-out ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } ${isRTL ? 'right-0 left-auto' : ''}`}>
         <div className="h-full flex flex-col">
-          {/* Mobile Header */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-lg font-bold text-lg">
-                FlixMarket
-              </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-600" />
-              </button>
-            </div>
-          </div>
-          
           {/* Mobile Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -143,18 +131,29 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 space-x-3 rtl:space-x-reverse text-left rtl:text-right ${
+                  className={`w-full flex items-center px-4 py-4 rounded-lg transition-all duration-200 space-x-3 rtl:space-x-reverse text-left rtl:text-right ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                   }`}
                 >
                   <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="font-medium text-base">{item.label}</span>
                 </button>
               );
             })}
           </nav>
+          
+          {/* Close Button at Bottom */}
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2 rtl:space-x-reverse"
+            >
+              <X className="w-5 h-5" />
+              <span>Close Menu</span>
+            </button>
+          </div>
         </div>
       </aside>
 
