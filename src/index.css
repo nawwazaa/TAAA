@@ -52,3 +52,54 @@ html, body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Responsive Tab Navigation Styles */
+@layer utilities {
+  /* Desktop view (>992px) - Full design with icons and text */
+  @media (min-width: 993px) {
+    .responsive-tab {
+      @apply text-base;
+    }
+    .responsive-tab-icon {
+      @apply block;
+    }
+    .responsive-tab-text-full {
+      @apply inline;
+    }
+    .responsive-tab-text-short {
+      @apply hidden;
+    }
+  }
+  
+  /* Tablet view (768px-992px) - Slightly smaller text */
+  @media (min-width: 769px) and (max-width: 992px) {
+    .responsive-tab {
+      @apply text-sm;
+    }
+    .responsive-tab-icon {
+      @apply block;
+    }
+    .responsive-tab-text-full {
+      @apply inline;
+    }
+    .responsive-tab-text-short {
+      @apply hidden;
+    }
+  }
+  
+  /* Mobile view (<=768px) - No icons, smaller text, shortened labels */
+  @media (max-width: 768px) {
+    .responsive-tab {
+      @apply text-xs;
+    }
+    .responsive-tab-icon {
+      @apply hidden;
+    }
+    .responsive-tab-text-full {
+      @apply hidden;
+    }
+    .responsive-tab-text-short {
+      @apply inline;
+    }
+  }
+}
