@@ -231,15 +231,6 @@ const AppContent: React.FC = () => {
       <div className="flex flex-col md:flex-row min-h-screen">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
         <main className="flex-1 p-2 md:p-4 min-w-0 overflow-hidden">
-          {/* View Mode Toggle - Moved inside main content */}
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => setViewMode('ios')}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg hover:bg-blue-600 transition-colors"
-            >
-              📱 View iOS App
-            </button>
-          </div>
           {renderMainContent()}
         </main>
       </div>
