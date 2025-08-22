@@ -86,11 +86,15 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className={`flex ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`flex ${isRTL ? 'rtl' : 'ltr'} relative`}>
       {/* Admin Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex-shrink-0 ${
+      <div className={`fixed inset-y-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex-shrink-0 ${
+        isRTL ? 'right-0 border-l border-gray-200' : 'left-0 border-r border-gray-200'
+      } ${
         isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } ${isRTL ? 'right-0 left-auto' : ''}`}>
+      } ${
+        isRTL && !isMobileSidebarOpen ? 'translate-x-full' : ''
+      }`}>
         <div className="p-3 lg:p-4 border-b border-gray-200">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <Shield className="w-6 h-6 text-blue-600" />
@@ -138,20 +142,20 @@ const AdminPanel: React.FC = () => {
       
       {/* Mobile Overlay */}
       {isMobileSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={() => setIsMobileSidebarOpen(false)}
         />
       )}
       
       {/* Main Content */}
-      <div className="flex-1 lg:ml-0">
+      <div className="flex-1">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-200 p-3">
           <div className="flex items-center justify-between">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="p-2 rounded-lg hover:bg-gray-100"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <Menu className="w-6 h-6" />
             </button>
