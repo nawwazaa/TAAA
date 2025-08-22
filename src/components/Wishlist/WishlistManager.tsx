@@ -488,7 +488,10 @@ const WishlistManager: React.FC = () => {
               }`}
             >
               <Search className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Browse Requests</span>
+              <span className="font-medium text-xs md:text-base">
+                <span className="md:hidden">Browse Req</span>
+                <span className="hidden md:inline">Browse Requests</span>
+              </span>
             </button>
             
             <button
@@ -500,7 +503,10 @@ const WishlistManager: React.FC = () => {
               }`}
             >
               <Heart className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">My Requests</span>
+              <span className="font-medium text-xs md:text-base">
+                <span className="md:hidden">My Req</span>
+                <span className="hidden md:inline">My Requests</span>
+              </span>
             </button>
             
             <button
@@ -512,7 +518,10 @@ const WishlistManager: React.FC = () => {
               }`}
             >
               <Plus className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Create Request</span>
+              <span className="font-medium text-xs md:text-base">
+                <span className="md:hidden">Create Req</span>
+                <span className="hidden md:inline">Create Request</span>
+              </span>
             </button>
             
             <button
@@ -524,7 +533,10 @@ const WishlistManager: React.FC = () => {
               }`}
             >
               <Star className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Boost Packages</span>
+              <span className="font-medium text-xs md:text-base">
+                <span className="md:hidden">Boost Pack</span>
+                <span className="hidden md:inline">Boost Packages</span>
+              </span>
             </button>
           </nav>
         </div>
