@@ -490,8 +490,6 @@ const WishlistManager: React.FC = () => {
               <Eye className="responsive-tab-icon w-5 h-5" />
               <span className="responsive-tab-text-full font-medium">Browse Requests</span>
               <span className="responsive-tab-text-short font-medium">Browse Req</span>
-                <span className="hidden md:inline">Browse Requests</span>
-              </span>
             </button>
             
             <button
@@ -502,8 +500,6 @@ const WishlistManager: React.FC = () => {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <span className="font-medium text-xs md:text-base">
-                <span className="md:hidden">My Req</span>
               <Heart className="responsive-tab-icon w-5 h-5" />
               <span className="responsive-tab-text-full font-medium">My Requests</span>
               <span className="responsive-tab-text-short font-medium">My Req</span>
@@ -520,8 +516,6 @@ const WishlistManager: React.FC = () => {
               <Plus className="responsive-tab-icon w-5 h-5" />
               <span className="responsive-tab-text-full font-medium">Create Request</span>
               <span className="responsive-tab-text-short font-medium">Create Req</span>
-                <span className="hidden md:inline">Create Request</span>
-              </span>
             </button>
             
             <button
@@ -532,11 +526,9 @@ const WishlistManager: React.FC = () => {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Zap className="responsive-tab-icon w-5 h-5" />
+              <Star className="responsive-tab-icon w-5 h-5" />
               <span className="responsive-tab-text-full font-medium">Boost Packages</span>
               <span className="responsive-tab-text-short font-medium">Boost Pack</span>
-                <span className="hidden md:inline">Boost Packages</span>
-              </span>
             </button>
           </nav>
         </div>
