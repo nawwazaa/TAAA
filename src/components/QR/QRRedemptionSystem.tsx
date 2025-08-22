@@ -382,39 +382,42 @@ const QRRedemptionSystem: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('scan')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'scan'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Scan className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Scan QR Code</span>
+              <Scan className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Scan QR Code</span>
+              <span className="responsive-tab-text-short font-medium">Scan QR Code</span>
             </button>
             
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'history'
                   ? 'border-blue-500 text-blue-600 bg-blue-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <History className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Redemption History</span>
+              <History className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Redemption History</span>
+              <span className="responsive-tab-text-short font-medium">Redemption History</span>
             </button>
             
             {(user?.userType === 'seller' || user?.userType === 'influencer') && (
               <button
                 onClick={() => setActiveTab('seller-scan')}
-                className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === 'seller-scan'
                     ? 'border-green-500 text-green-600 bg-green-50'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
               >
-                <Shield className="w-5 h-5" />
-                <span className="font-medium text-sm md:text-base">Seller Scanner</span>
+                <Shield className="responsive-tab-icon w-5 h-5" />
+                <span className="responsive-tab-text-full font-medium">Seller Scanner</span>
+                <span className="responsive-tab-text-short font-medium">Seller Scanner</span>
               </button>
             )}
           </nav>

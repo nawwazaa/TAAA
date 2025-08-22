@@ -319,39 +319,42 @@ const EventsManager: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('browse')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'browse'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Eye className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Browse Events</span>
+              <Eye className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Browse Events</span>
+              <span className="responsive-tab-text-short font-medium">Browse Events</span>
             </button>
             
             <button
               onClick={() => setActiveTab('my-events')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'my-events'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Ticket className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">My Events</span>
+              <Ticket className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">My Events</span>
+              <span className="responsive-tab-text-short font-medium">My Events</span>
             </button>
             
             {(user?.userType === 'influencer' || user?.userType === 'seller') && (
               <button
                 onClick={() => setActiveTab('create')}
-                className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === 'create'
                     ? 'border-pink-500 text-pink-600 bg-pink-50'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
               >
-                <Plus className="w-5 h-5" />
-                <span className="font-medium text-sm md:text-base">Create Event</span>
+                <Plus className="responsive-tab-icon w-5 h-5" />
+                <span className="responsive-tab-text-full font-medium">Create Event</span>
+                <span className="responsive-tab-text-short font-medium">Create Event</span>
               </button>
             )}
           </nav>

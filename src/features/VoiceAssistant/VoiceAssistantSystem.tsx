@@ -33,38 +33,41 @@ const VoiceAssistantSystem: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('interface')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'interface'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Mic className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Voice Interface</span>
+              <Mic className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Voice Interface</span>
+              <span className="responsive-tab-text-short font-medium">Voice Interface</span>
             </button>
             
             <button
               onClick={() => setActiveTab('settings')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'settings'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Settings className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Settings</span>
+              <Settings className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Settings</span>
+              <span className="responsive-tab-text-short font-medium">Settings</span>
             </button>
             
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'analytics'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Brain className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Analytics</span>
+              <Brain className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Analytics</span>
+              <span className="responsive-tab-text-short font-medium">Analytics</span>
             </button>
           </nav>
         </div>

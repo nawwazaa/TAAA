@@ -143,50 +143,54 @@ const ReferralSystem: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'overview'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Gift className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Overview</span>
+              <Gift className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Overview</span>
+              <span className="responsive-tab-text-short font-medium">Overview</span>
             </button>
             
             <button
               onClick={() => setActiveTab('my-referrals')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'my-referrals'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Users className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">My Referrals</span>
+              <Users className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">My Referrals</span>
+              <span className="responsive-tab-text-short font-medium">My Referrals</span>
             </button>
             
             <button
               onClick={() => setActiveTab('leaderboard')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'leaderboard'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Award className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">Leaderboard</span>
+              <Award className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Leaderboard</span>
+              <span className="responsive-tab-text-short font-medium">Leaderboard</span>
             </button>
             
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'history'
                   ? 'border-purple-500 text-purple-600 bg-purple-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Clock className="w-5 h-5" />
-              <span className="font-medium text-sm md:text-base">History</span>
+              <Clock className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">History</span>
+              <span className="responsive-tab-text-short font-medium">History</span>
             </button>
           </nav>
         </div>

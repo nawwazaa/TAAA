@@ -481,60 +481,60 @@ const WishlistManager: React.FC = () => {
           <nav className="flex space-x-0 rtl:space-x-reverse overflow-x-auto">
             <button
               onClick={() => setActiveTab('browse')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'browse'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Search className="w-5 h-5" />
-              <span className="font-medium text-xs md:text-base">
-                <span className="md:hidden">Browse Req</span>
+              <Eye className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Browse Requests</span>
+              <span className="responsive-tab-text-short font-medium">Browse Req</span>
                 <span className="hidden md:inline">Browse Requests</span>
               </span>
             </button>
             
             <button
               onClick={() => setActiveTab('my-wishes')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'my-wishes'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Heart className="w-5 h-5" />
               <span className="font-medium text-xs md:text-base">
                 <span className="md:hidden">My Req</span>
-                <span className="hidden md:inline">My Requests</span>
-              </span>
+              <Heart className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">My Requests</span>
+              <span className="responsive-tab-text-short font-medium">My Req</span>
             </button>
             
             <button
               onClick={() => setActiveTab('create')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'create'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Plus className="w-5 h-5" />
-              <span className="font-medium text-xs md:text-base">
-                <span className="md:hidden">Create Req</span>
+              <Plus className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Create Request</span>
+              <span className="responsive-tab-text-short font-medium">Create Req</span>
                 <span className="hidden md:inline">Create Request</span>
               </span>
             </button>
             
             <button
               onClick={() => setActiveTab('subscriptions')}
-              className={`flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+              className={`responsive-tab flex items-center space-x-2 rtl:space-x-reverse px-3 md:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === 'subscriptions'
                   ? 'border-pink-500 text-pink-600 bg-pink-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Star className="w-5 h-5" />
-              <span className="font-medium text-xs md:text-base">
-                <span className="md:hidden">Boost Pack</span>
+              <Zap className="responsive-tab-icon w-5 h-5" />
+              <span className="responsive-tab-text-full font-medium">Boost Packages</span>
+              <span className="responsive-tab-text-short font-medium">Boost Pack</span>
                 <span className="hidden md:inline">Boost Packages</span>
               </span>
             </button>
