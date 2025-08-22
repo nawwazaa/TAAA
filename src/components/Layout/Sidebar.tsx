@@ -103,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       {/* Mobile Hamburger Button - Fixed position */}
       <button
         onClick={handleMobileMenuToggle}
-        className="mobile-menu-button md:hidden fixed top-20 left-2 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+        className="mobile-menu-button md:hidden fixed top-2 left-2 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
       >
         <Menu className="w-6 h-6 text-gray-600" />
       </button>
@@ -117,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       )}
 
       {/* Mobile Sidebar */}
-      <aside className={`mobile-menu md:hidden fixed top-24 left-0 right-0 bottom-0 z-50 w-full bg-white shadow-xl border-t border-gray-200 transform transition-transform duration-300 ease-in-out ${
+      <aside className={`mobile-menu md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 w-full bg-white shadow-xl border-t border-gray-200 transform transition-transform duration-300 ease-in-out ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } ${isRTL ? 'right-0 left-auto' : ''}`}>
         <div className="h-full flex flex-col">
