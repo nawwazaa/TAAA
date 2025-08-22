@@ -114,9 +114,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       )}
 
       {/* Mobile Sidebar */}
-      <aside className={`mobile-menu md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl border-r border-gray-200 transform transition-transform duration-300 ease-in-out ${
-        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-      } ${isRTL ? 'right-0 left-auto' : ''}`}>
+      <aside className={`mobile-menu md:hidden fixed inset-y-0 z-50 w-64 bg-white shadow-xl border-gray-200 transform transition-transform duration-300 ease-in-out ${
+        isRTL ? 'right-0 border-l' : 'left-0 border-r'
+      } ${
+        isMobileMenuOpen 
+          ? 'translate-x-0' 
+          : isRTL ? 'translate-x-full' : '-translate-x-full'
+      }`}>
         <div className="h-full flex flex-col">
           {/* Mobile Header */}
           <div className="p-4 border-b border-gray-200">
