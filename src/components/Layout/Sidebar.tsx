@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   Home, 
@@ -33,6 +33,25 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   const { user } = useAuth();
   const isRTL = i18n.language === 'ar';
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (isMobileMenuOpen && !target.closest('.mobile-menu') && !target.closest('.mobile-menu-button')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
+
+  // Close mobile menu when tab changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [activeTab]);
 
   const getMenuItems = () => {
     const commonItems = [
@@ -75,51 +94,88 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
 
   const menuItems = getMenuItems();
 
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
-    <aside className={`flex-shrink-0 w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
-      isCollapsed ? 'md:w-16' : 'md:w-64'
-    }`}>
-      <div className="h-full flex flex-col">
-        {/* Desktop Hamburger Toggle */}
-        <div className="hidden md:flex justify-end p-2 border-b border-gray-200">
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-          >
-            <Menu className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
-        
-        <nav className={`flex-1 px-2 md:px-4 py-3 md:py-6 ${isCollapsed ? 'space-y-1' : 'space-y-1 md:space-y-2'}`}>
-          {/* Mobile: Horizontal scroll menu */}
-          <div className="md:hidden">
-            <div className="flex space-x-2 rtl:space-x-reverse overflow-x-auto pb-2">
-              {menuItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-                
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => onTabChange(item.id)}
-                    className={`flex-shrink-0 flex flex-col items-center px-3 py-2 rounded-lg text-center transition-all duration-200 min-w-[80px] ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                    }`}
-                  >
-                    <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                    <span className="text-xs font-medium">{item.label}</span>
-                  </button>
-                );
-              })}
+    <>
+      {/* Mobile Hamburger Button - Fixed position */}
+      <button
+        onClick={handleMobileMenuToggle}
+        className="mobile-menu-button md:hidden fixed top-4 left-4 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+      >
+        <Menu className="w-6 h-6 text-gray-600" />
+      </button>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" />
+      )}
+
+      {/* Mobile Sidebar */}
+      <aside className={`mobile-menu md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl border-r border-gray-200 transform transition-transform duration-300 ease-in-out ${
+        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      } ${isRTL ? 'right-0 left-auto' : ''}`}>
+        <div className="h-full flex flex-col">
+          {/* Mobile Header */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-lg font-bold text-lg">
+                FlixMarket
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
             </div>
           </div>
           
-          {/* Desktop: Vertical menu */}
-          <div className="hidden md:block space-y-1">
+          {/* Mobile Navigation */}
+          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onTabChange(item.id)}
+                  className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 space-x-3 rtl:space-x-reverse text-left rtl:text-right ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-500 to-teal-500 text-white shadow-lg'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      </aside>
+
+      {/* Desktop Sidebar */}
+      <aside className={`hidden md:flex flex-shrink-0 w-full bg-white shadow-lg border-r border-gray-200 ${isRTL ? 'rtl' : 'ltr'} md:min-h-screen transition-all duration-300 ${
+        isCollapsed ? 'md:w-16' : 'md:w-64'
+      }`}>
+        <div className="h-full flex flex-col w-full">
+          {/* Desktop Hamburger Toggle */}
+          <div className="flex justify-end p-2 border-b border-gray-200">
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            >
+              <Menu className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <nav className={`flex-1 px-2 md:px-4 py-3 md:py-6 space-y-1 md:space-y-2`}>
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -151,10 +207,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
               </button>
             );
           })}
-          </div>
-        </nav>
-      </div>
-    </aside>
+          </nav>
+        </div>
+      </aside>
+    </>
   );
 };
 
