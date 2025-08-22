@@ -110,7 +110,22 @@ const Header: React.FC = () => {
       <div className="w-full px-2 sm:px-3 lg:px-2">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-1 rounded-lg font-bold text-sm md:text-lg">
+            {/* Mobile Hamburger Menu - Only visible on mobile */}
+            <button
+              onClick={() => {
+                // Trigger the mobile menu toggle in Sidebar component
+                const event = new CustomEvent('toggle-mobile-menu');
+                window.dispatchEvent(event);
+              }}
+              className="md:hidden bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            
+            {/* Desktop Logo - Hidden on mobile */}
+            <div className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-1 rounded-lg font-bold text-sm md:text-lg">
               FlixMarket
             </div>
           </div>

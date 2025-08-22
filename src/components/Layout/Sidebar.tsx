@@ -44,8 +44,16 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       }
     };
 
+    const handleToggleMobileMenu = () => {
+      setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('toggle-mobile-menu', handleToggleMobileMenu);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('toggle-mobile-menu', handleToggleMobileMenu);
+    };
   }, [isMobileMenuOpen]);
 
   // Close mobile menu when tab changes
@@ -100,14 +108,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
 
   return (
     <>
-      {/* Mobile Hamburger Button - Fixed position */}
-      <button
-        onClick={handleMobileMenuToggle}
-        className="mobile-menu-button md:hidden fixed top-4 left-4 z-50 bg-white shadow-lg border border-gray-200 p-2 rounded-lg hover:bg-gray-50 transition-colors"
-      >
-        <Menu className="w-6 h-6 text-gray-600" />
-      </button>
-
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" />
