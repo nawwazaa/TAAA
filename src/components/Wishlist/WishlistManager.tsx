@@ -490,8 +490,6 @@ const WishlistManager: React.FC = () => {
               <Eye className="responsive-tab-icon w-5 h-5" />
               <span className="responsive-tab-text-full font-medium">Browse Requests</span>
               <span className="responsive-tab-text-short font-medium">Browse Req</span>
-                <span className="hidden md:inline">Browse Requests</span>
-              </span>
             </button>
             
             <button
