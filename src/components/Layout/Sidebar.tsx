@@ -135,6 +135,46 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 <X className="w-5 h-5 text-gray-600" />
               </button>
             </div>
+            
+            {/* User Account Type Display - Mobile Only */}
+            {user && (
+              <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <User className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+                    <div className="flex items-center space-x-2 rtl:space-x-reverse mt-1">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
+                        user.email === 'admin@flixmarket.com' || user.email?.endsWith('@flixmarket.com') 
+                          ? 'bg-red-100 text-red-800 border border-red-200'
+                          : user.userType === 'seller'
+                          ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                          : user.userType === 'influencer'
+                          ? 'bg-purple-100 text-purple-800 border border-purple-200'
+                          : 'bg-green-100 text-green-800 border border-green-200'
+                      }`}>
+                        {user.email === 'admin@flixmarket.com' 
+                          ? '👑 SUPER ADMIN'
+                          : user.email?.endsWith('@flixmarket.com')
+                          ? '🛡️ ADMIN'
+                          : user.userType === 'seller'
+                          ? '🏪 SELLER'
+                          : user.userType === 'influencer'
+                          ? '⭐ INFLUENCER'
+                          : '👤 USER'
+                        }
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-1 rtl:space-x-reverse mt-2">
+                      <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
+                      <span className="text-xs font-medium text-gray-600">{user.flixbits.toLocaleString()} FB</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           
           {/* Mobile Navigation */}
