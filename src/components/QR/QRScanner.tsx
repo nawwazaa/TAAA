@@ -111,10 +111,6 @@ const QRScanner: React.FC = () => {
     }, 1000);
   };
 
-  const simulateQRScan = () => {
-    setIsScanning(false);
-  };
-
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
