@@ -29,14 +29,27 @@ const QRScanner: React.FC = () => {
       setIsScanning(true);
       setScanMethod('camera');
       
-      // Request camera permission and access
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: 'environment', // Use back camera on mobile
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
-        }
-      });
+      // Request camera permission and access with fallback
+      let stream: MediaStream;
+      try {
+        // Try back camera first
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'environment', // Use back camera on mobile
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        });
+      } catch (backCameraError) {
+        // If back camera fails, try front camera
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'user', // Use front camera as fallback
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        });
+      }
       
       streamRef.current = stream;
       
