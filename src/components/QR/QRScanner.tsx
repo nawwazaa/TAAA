@@ -194,18 +194,6 @@ const QRScanner: React.FC = () => {
     }
   };
 
-  const resetScanner = () => {
-    stopCamera();
-    setScannedData(null);
-    setIsScanning(false);
-    setScanMethod(null);
-    setFollowSuccess(false);
-    setCameraError('');
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
   return (
     <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
