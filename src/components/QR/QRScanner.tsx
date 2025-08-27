@@ -20,13 +20,87 @@ const QRScanner: React.FC = () => {
   const [scanMethod, setScanMethod] = useState<'camera' | 'upload' | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followSuccess, setFollowSuccess] = useState(false);
+  const [cameraError, setCameraError] = useState<string>('');
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Simulate camera access
+  // Request camera permissions and start camera
   const startCamera = async () => {
+    setCameraError('');
     setIsScanning(true);
     setScanMethod('camera');
+    
+    try {
+      // Check if camera is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Camera not supported in this browser');
+      }
+
+      // Request camera permission
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment', // Use back camera on mobile
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      });
+
+      setStream(mediaStream);
+      setHasPermission(true);
+      
+      // Set video source
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+        videoRef.current.play();
+      }
+
+      // Simulate QR detection after camera starts
+      setTimeout(() => {
+        simulateQRScan();
+      }, 5000); // Give user time to point at QR code
+
+    } catch (error: any) {
+      console.error('Camera access error:', error);
+      setHasPermission(false);
+      
+      if (error.name === 'NotAllowedError') {
+        setCameraError('Camera permission denied. Please allow camera access and refresh the page.');
+      } else if (error.name === 'NotFoundError') {
+        setCameraError('No camera found on this device.');
+      } else if (error.name === 'NotSupportedError') {
+        setCameraError('Camera not supported in this browser. Try Chrome or Safari.');
+      } else {
+        setCameraError('Failed to access camera. Please check your browser settings.');
+      }
+      
+      setIsScanning(false);
+      setScanMethod(null);
+    }
+  };
+
+  // Stop camera and clean up
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+  };
+
+  // Clean up camera when component unmounts
+  useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, [stream]);
+
+  const simulateQRScan = () => {
+    // Stop camera
+    stopCamera();
     
     // Simulate camera initialization
     setTimeout(() => {
@@ -38,16 +112,6 @@ const QRScanner: React.FC = () => {
   };
 
   const simulateQRScan = () => {
-    // Simulate scanning a seller's QR code
-    const mockScannedData: ScannedUser = {
-      userId: 'seller_123',
-      userType: 'seller',
-      name: 'Mario\'s Pizza Restaurant',
-      platform: 'FlixMarket',
-      timestamp: Date.now()
-    };
-    
-    setScannedData(mockScannedData);
     setIsScanning(false);
   };
 
@@ -134,6 +198,18 @@ const QRScanner: React.FC = () => {
     }
   };
 
+  const resetScanner = () => {
+    stopCamera();
+    setScannedData(null);
+    setIsScanning(false);
+    setScanMethod(null);
+    setFollowSuccess(false);
+    setCameraError('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
@@ -145,6 +221,34 @@ const QRScanner: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">Choose Scan Method</h2>
           
+          {/* Camera Permission Status */}
+          {hasPermission === false && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+              <h3 className="font-bold text-red-800 mb-2">📷 Camera Permission Required</h3>
+              <p className="text-red-700 text-sm mb-3">
+                To use the camera scanner, please allow camera access in your browser:
+              </p>
+              <div className="space-y-2 text-red-600 text-sm">
+                <p>1. Click the camera icon 📷 in your browser's address bar</p>
+                <p>2. Select "Allow" for camera access</p>
+                <p>3. Refresh the page and try again</p>
+              </div>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700"
+              >
+                🔄 Refresh Page
+              </button>
+            </div>
+          )}
+
+          {cameraError && (
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+              <h3 className="font-bold text-orange-800 mb-2">⚠️ Camera Issue</h3>
+              <p className="text-orange-700 text-sm">{cameraError}</p>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <button
               onClick={startCamera}
@@ -184,19 +288,47 @@ const QRScanner: React.FC = () => {
           <div className="text-center">
             <div className="relative">
               {scanMethod === 'camera' ? (
-                <div className="bg-black rounded-lg aspect-square max-w-sm mx-auto flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse" />
-                    <p className="text-lg font-medium">Camera Active</p>
-                    <p className="text-sm opacity-75">Point at QR code to scan</p>
-                  </div>
-                  
-                  {/* Scanning overlay */}
-                  <div className="absolute inset-4 border-2 border-blue-500 rounded-lg">
-                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-lg"></div>
-                    <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg"></div>
-                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-lg"></div>
-                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-lg"></div>
+                <div className="relative bg-black rounded-lg aspect-square max-w-sm mx-auto overflow-hidden">
+                  {stream && hasPermission ? (
+                    <>
+                      <video
+                        ref={videoRef}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        playsInline
+                        muted
+                      />
+                      {/* Scanning overlay on top of video */}
+                      <div className="absolute inset-4 border-2 border-blue-500 rounded-lg pointer-events-none">
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-lg"></div>
+                        <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg"></div>
+                        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-lg"></div>
+                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-lg"></div>
+                      </div>
+                      {/* Instructions overlay */}
+                      <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-70 text-white p-3 rounded-lg">
+                        <p className="text-center text-sm">📷 Point camera at QR code</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-center h-full">
+                      <div className="text-white text-center">
+                        {cameraError ? (
+                          <>
+                            <X className="w-16 h-16 mx-auto mb-4 text-red-400" />
+                            <p className="text-lg font-medium text-red-400">Camera Error</p>
+                            <p className="text-sm opacity-75">{cameraError}</p>
+                          </>
+                        ) : (
+                          <>
+                            <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse" />
+                            <p className="text-lg font-medium">Starting Camera...</p>
+                            <p className="text-sm opacity-75">Please allow camera access</p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   </div>
                 </div>
               ) : (
@@ -216,10 +348,17 @@ const QRScanner: React.FC = () => {
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
-              <p className="text-gray-600">Scanning for QR code...</p>
+              <p className="text-gray-600">
+                {scanMethod === 'camera' ? 
+                  (stream ? 'Point camera at QR code...' : 'Starting camera...') : 
+                  'Scanning for QR code...'
+                }
+              </p>
               
               <button
-                onClick={resetScanner}
+                onClick={() => {
+                  resetScanner();
+                }}
                 className="mt-4 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Cancel
@@ -279,7 +418,9 @@ const QRScanner: React.FC = () => {
               </button>
               
               <button
-                onClick={resetScanner}
+                onClick={() => {
+                  resetScanner();
+                }}
                 className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Cancel
@@ -338,6 +479,16 @@ const QRScanner: React.FC = () => {
           <div className="flex items-start space-x-3 rtl:space-x-reverse">
             <div className="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
             <p>Get exclusive access to special deals and early notifications</p>
+          </div>
+        </div>
+        
+        <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <h4 className="font-bold text-yellow-800 mb-2">📷 Camera Tips</h4>
+          <div className="space-y-1 text-yellow-700 text-sm">
+            <p>• Make sure to allow camera permission when prompted</p>
+            <p>• Hold device steady and point directly at QR code</p>
+            <p>• Ensure good lighting for best scanning results</p>
+            <p>• Keep QR code within the blue scanning frame</p>
           </div>
         </div>
       </div>
