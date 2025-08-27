@@ -22,19 +22,61 @@ const QRScanner: React.FC = () => {
   const [followSuccess, setFollowSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
-  // Simulate camera access
   const startCamera = async () => {
-    setIsScanning(true);
-    setScanMethod('camera');
-    
-    // Simulate camera initialization
-    setTimeout(() => {
-      // Simulate successful QR scan after 3 seconds
+    try {
+      setIsScanning(true);
+      setScanMethod('camera');
+      
+      // Request camera permission and access
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment', // Use back camera on mobile
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      });
+      
+      streamRef.current = stream;
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+      }
+      
+      // For demo purposes, still simulate QR detection after 3 seconds
+      // In a real app, you'd use a QR code detection library here
       setTimeout(() => {
         simulateQRScan();
+        stopCamera();
       }, 3000);
-    }, 1000);
+      
+    } catch (error) {
+      console.error('Camera access error:', error);
+      setIsScanning(false);
+      setScanMethod(null);
+      
+      if (error.name === 'NotAllowedError') {
+        alert('Camera permission denied. Please allow camera access and try again.');
+      } else if (error.name === 'NotFoundError') {
+        alert('No camera found on this device.');
+      } else if (error.name === 'NotSupportedError') {
+        alert('Camera not supported in this browser. Please use Chrome, Safari, or Edge.');
+      } else {
+        alert('Failed to access camera. Please check your camera settings and try again.');
+      }
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
   };
 
   const simulateQRScan = () => {
@@ -92,6 +134,7 @@ const QRScanner: React.FC = () => {
   };
 
   const resetScanner = () => {
+    stopCamera();
     setScannedData(null);
     setIsScanning(false);
     setScanMethod(null);
@@ -134,6 +177,12 @@ const QRScanner: React.FC = () => {
     }
   };
 
+  // Cleanup camera stream when component unmounts
+  React.useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, []);
   return (
     <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
@@ -184,20 +233,46 @@ const QRScanner: React.FC = () => {
           <div className="text-center">
             <div className="relative">
               {scanMethod === 'camera' ? (
-                <div className="bg-black rounded-lg aspect-square max-w-sm mx-auto flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse" />
-                    <p className="text-lg font-medium">Camera Active</p>
-                    <p className="text-sm opacity-75">Point at QR code to scan</p>
+                <div className="relative bg-black rounded-lg aspect-square max-w-sm mx-auto overflow-hidden">
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    playsInline
+                    muted
+                  />
+                  
+                  {/* Camera overlay with scanning frame */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative">
+                      {/* Scanning frame */}
+                      <div className="w-64 h-64 border-2 border-blue-500 rounded-lg relative">
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-lg"></div>
+                        <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-lg"></div>
+                        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-lg"></div>
+                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg"></div>
+                        
+                        {/* Scanning line animation */}
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-blue-500 animate-pulse"></div>
+                      </div>
+                      
+                      {/* Instructions overlay */}
+                      <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-white text-center">
+                        <p className="text-sm font-medium">Point camera at QR code</p>
+                      </div>
+                    </div>
                   </div>
                   
-                  {/* Scanning overlay */}
-                  <div className="absolute inset-4 border-2 border-blue-500 rounded-lg">
-                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-lg"></div>
-                    <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg"></div>
-                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-lg"></div>
-                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-lg"></div>
-                  </div>
+                  {/* Camera not available fallback */}
+                  {!videoRef.current?.srcObject && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75">
+                      <div className="text-white text-center">
+                        <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse" />
+                        <p className="text-lg font-medium">Starting Camera...</p>
+                        <p className="text-sm opacity-75">Please allow camera access</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="bg-gray-100 rounded-lg aspect-square max-w-sm mx-auto flex items-center justify-center">
