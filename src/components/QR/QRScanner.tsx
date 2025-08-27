@@ -111,6 +111,10 @@ const QRScanner: React.FC = () => {
     }, 1000);
   };
 
+  const simulateQRScan = () => {
+    setIsScanning(false);
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -191,6 +195,18 @@ const QRScanner: React.FC = () => {
         return 75;
       default:
         return 25;
+    }
+  };
+
+  const resetScanner = () => {
+    stopCamera();
+    setScannedData(null);
+    setIsScanning(false);
+    setScanMethod(null);
+    setFollowSuccess(false);
+    setCameraError('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
