@@ -10,6 +10,8 @@ import SellerDashboard from './components/Dashboard/SellerDashboard';
 import GamePredictions from './components/Games/GamePredictions';
 import QRCodeDisplay from './components/QR/QRCodeDisplay';
 import QRScanner from './components/QR/QRScanner';
+import EnhancedQRScanner from './components/QR/EnhancedQRScanner';
+import QRCodeTabs from './components/QR/QRCodeTabs';
 import QRRedemptionSystem from './components/QR/QRRedemptionSystem';
 import AdminPanel from './components/Admin/AdminPanel';
 import VideoContest from './components/VideoContest/VideoContest';
@@ -124,9 +126,9 @@ const AppContent: React.FC = () => {
       case 'tournaments':
         return <GamePredictions />;
       case 'qr-code':
-        return <QRCodeDisplay />;
+        return <QRCodeTabs />;
       case 'qr-scanner':
-        return <QRScanner />;
+        return <EnhancedQRScanner />;
       case 'qr-redemption':
         return <QRRedemptionSystem />;
       case 'video-contest':
