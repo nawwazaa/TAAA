@@ -287,6 +287,7 @@ const QRScanner: React.FC = () => {
     }
   };
 
+  return (
     <div className={`space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-6">
         <h1 className="text-2xl font-bold mb-2">QR Scanner</h1>
@@ -476,22 +477,6 @@ const QRScanner: React.FC = () => {
               </div>
               <p className="text-gray-600">🔍 Processing QR code...</p>
               
-            <div className="bg-gray-100 rounded-lg aspect-square max-w-sm mx-auto flex items-center justify-center">
-              <div className="text-center">
-                <Upload className="w-16 h-16 mx-auto mb-4 animate-pulse text-gray-500" />
-                <p className="text-lg font-medium text-gray-700">📁 Processing Image</p>
-                <p className="text-sm text-gray-500">Analyzing QR code...</p>
-              </div>
-            </div>
-            
-            <div className="mt-6">
-              <div className="flex items-center justify-center space-x-2 rtl:space-x-reverse mb-4">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-              </div>
-              <p className="text-gray-600">Scanning for QR code...</p>
-              
               <button
                 onClick={resetScanner}
                 className="mt-4 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -615,6 +600,8 @@ const QRScanner: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <canvas ref={canvasRef} className="hidden" />
     </div>
   );
 };
